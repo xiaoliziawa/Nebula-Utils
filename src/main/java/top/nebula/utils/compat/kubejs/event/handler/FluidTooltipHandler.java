@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.utils.compat.kubejs.event.NebulaEvents;
-import top.nebula.utils.compat.kubejs.event.function.FluidTooltipEvent;
+import top.nebula.utils.compat.kubejs.event.function.FluidTooltipEventJS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class FluidTooltipHandler {
 
 		List<Component> additions = new ArrayList<>();
 
-		FluidTooltipEvent jsEvent = new FluidTooltipEvent(fluid, additions);
+		FluidTooltipEventJS jsEvent = new FluidTooltipEventJS(fluid, additions);
 		NebulaEvents.FLUID_TOOLTIP.post(jsEvent);
 		jsEvent.apply();
 

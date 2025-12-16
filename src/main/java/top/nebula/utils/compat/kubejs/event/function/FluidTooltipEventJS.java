@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class FluidTooltipEvent extends EventJS {
+public class FluidTooltipEventJS extends EventJS {
 	private final FluidStackJS fluidId;
 	private final List<Component> tooltip;
 	private final List<Consumer<List<Component>>> queuedAdds = new ArrayList<>();
 
-	public FluidTooltipEvent(FluidStackJS fluid, List<Component> hanlder) {
+	public FluidTooltipEventJS(FluidStackJS fluid, List<Component> hanlder) {
 		this.fluidId = fluid;
 		this.tooltip = hanlder;
 	}
