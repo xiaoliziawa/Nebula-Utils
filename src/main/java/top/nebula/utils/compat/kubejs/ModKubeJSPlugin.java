@@ -3,12 +3,18 @@ package top.nebula.utils.compat.kubejs;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 import top.nebula.utils.NebulaUtils;
+import top.nebula.utils.compat.kubejs.event.NebulaEvents;
 import top.nebula.utils.multiblock.MultiblockStructureBuilder;
 import top.nebula.utils.multiblock.PropertyImmutableMap;
 
 import java.time.LocalDateTime;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
+	public void registerEvents() {
+		super.registerEvents();
+		NebulaEvents.INSTANCE.register();
+	}
+
 	public void registerBindings(BindingsEvent event) {
 		super.registerBindings(event);
 
