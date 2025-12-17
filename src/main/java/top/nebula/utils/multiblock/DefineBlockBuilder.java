@@ -23,7 +23,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 指定具体方块
 	 */
-	@Info("Specify a block\n指定具体方块")
+	@Info("Specify a block\n\n指定具体方块")
 	public void block(Block block) {
 		matchers.add(pos);
 		matchers.add(block);
@@ -32,7 +32,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 指定具体方块状态
 	 */
-	@Info("Specify a block states\n指定具体方块状态")
+	@Info("Specify a block states\n\n指定具体方块状态")
 	public void state(BlockState state) {
 		matchers.add(pos);
 		matchers.add(PatchouliAPI.get().stateMatcher(state));
@@ -41,7 +41,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 指定方块标签
 	 */
-	@Info("Specify a block tag\n指定方块标签")
+	@Info("Specify a block tag\n\n指定方块标签")
 	public void tag(TagKey<Block> tag) {
 		matchers.add(pos);
 		matchers.add(tag);
@@ -50,7 +50,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 支持任意方块
 	 */
-	@Info("Allows the use of any block, generally used for empty spaces\n支持任意方块, 一般用于空位")
+	@Info("Allows the use of any block, generally used for empty spaces\n\n支持任意方块, 一般用于空位")
 	public void any() {
 		matchers.add(pos);
 		matchers.add(PatchouliAPI.get().anyMatcher());
@@ -59,7 +59,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 指定方块 + Predicate<BlockState>
 	 */
-	@Info("Specifies a block + Predicate<BlockState>\n指定方块 + Predicate<BlockState>")
+	@Info("Specifies a block + Predicate<BlockState>\n\n指定方块 + Predicate<BlockState>")
 	public void predicate(Block block, Predicate<BlockState> pred) {
 		matchers.add(pos);
 		matchers.add(PatchouliAPI.get().predicateMatcher(block, pred));
@@ -68,7 +68,7 @@ public class DefineBlockBuilder {
 	/**
 	 * 指定方块 + 状态映射 (Map<Property, Comparable>)
 	 */
-	@Info("Specifies a block + state mapping (Map<Property, Comparable>)\n指定方块 + 状态映射 (Map<Property, Comparable>)")
+	@Info("Specifies a block + state mapping (Map<Property, Comparable>)\n\n指定方块 + 状态映射 (Map<Property, Comparable>)")
 	public void stateMap(Block block, Map<Property<?>, ? extends Comparable<?>> stateMap) {
 		BlockState state = block.defaultBlockState();
 		for (Map.Entry<Property<?>, ? extends Comparable<?>> entry : stateMap.entrySet()) {

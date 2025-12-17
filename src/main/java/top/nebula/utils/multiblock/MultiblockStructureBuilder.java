@@ -8,26 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * MultiblockStructureBuilder 用于构建 Patchouli 多方块结构。
- * <p>
- * 支持通过 DSL 风格的 Lambda 定义每个位置的匹配规则，
- * 避免 KubeJS 无法使用 Java 方法重载的问题。
- * </p>
- * <p>
- * 使用示例：
- * <pre>
- *
- *
- *
- *
- *
- *
- *
- *
- *
- * </pre>
- */
 public class MultiblockStructureBuilder {
 	private final String[][] structure;
 	private final List<Object> matchers = new ArrayList<>();
@@ -48,7 +28,7 @@ public class MultiblockStructureBuilder {
 	 * @param handler Lambda 定义方块匹配规则
 	 * @return 构建器自身
 	 */
-	@Info("Defines the matching rule for a specific position in the structure\n定义结构中某个位置的匹配规则")
+	@Info("Defines the matching rule for a specific position in the structure\n\n定义结构中某个位置的匹配规则")
 	public MultiblockStructureBuilder define(char pos, Consumer<DefineBlockBuilder> handler) {
 		handler.accept(new DefineBlockBuilder(pos, matchers));
 		return this;

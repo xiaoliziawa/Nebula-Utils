@@ -34,7 +34,7 @@ public class PropertyImmutableMap {
 	 * @param <T>      属性值的类型，必须实现Comparable
 	 * @return 构建器自身，支持链式调用
 	 */
-	@Info("Adds a strictly typed property-value pair\n添加一个类型严格匹配的属性-值对")
+	@Info("Adds a strictly typed property-value pair\n\n添加一个类型严格匹配的属性-值对")
 	public <T extends Comparable<T>> PropertyImmutableMap add(Property<T> property, T value) {
 		if (property == null) {
 			throw new IllegalArgumentException("Property不能为null");
@@ -53,7 +53,7 @@ public class PropertyImmutableMap {
 	 * @param other 其他属性映射
 	 * @return 构建器自身，支持链式调用
 	 */
-	@Info("Adds property-value pairs from other mappings in bulk\n批量添加其他映射中的属性-值对")
+	@Info("Adds property-value pairs from other mappings in bulk\n\n批量添加其他映射中的属性-值对")
 	public PropertyImmutableMap putAll(Map<? extends Property<?>, ? extends Comparable<?>> other) {
 		internalBuilder.putAll(other);
 		return this;
@@ -64,7 +64,7 @@ public class PropertyImmutableMap {
 	 *
 	 * @return 包含所有添加的属性-值对的ImmutableMap
 	 */
-	@Info("Builds an immutable map containing all added property-value pairs as an ImmutableMap\n构建不可变映射, 包含所有添加的属性-值对的ImmutableMap")
+	@Info("Builds an immutable map containing all added property-value pairs as an ImmutableMap\n\n构建不可变映射, 包含所有添加的属性-值对的ImmutableMap")
 	public ImmutableMap<Property<?>, Comparable<?>> build() {
 		return internalBuilder.build();
 	}
