@@ -27,6 +27,7 @@ public class NebulaUtils {
 
 	/**
 	 * 摄氏度转到华氏度
+	 * Celsius to Fahrenheit
 	 *
 	 * @param celsius 摄氏度
 	 * @return
@@ -38,6 +39,7 @@ public class NebulaUtils {
 
 	/**
 	 * 华氏度转到摄氏度
+	 * Fahrenheit to Celsius
 	 *
 	 * @param fahrenheit 华氏度
 	 * @return
