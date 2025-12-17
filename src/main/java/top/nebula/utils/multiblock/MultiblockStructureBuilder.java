@@ -1,19 +1,33 @@
 package top.nebula.utils.multiblock;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
+import dev.latvian.mods.kubejs.typings.Info;
 import vazkii.patchouli.api.IMultiblock;
-import vazkii.patchouli.api.IStateMatcher;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
 
+/**
+ * MultiblockStructureBuilder 用于构建 Patchouli 多方块结构。
+ * <p>
+ * 支持通过 DSL 风格的 Lambda 定义每个位置的匹配规则，
+ * 避免 KubeJS 无法使用 Java 方法重载的问题。
+ * </p>
+ * <p>
+ * 使用示例：
+ * <pre>
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * </pre>
+ */
 public class MultiblockStructureBuilder {
 	private final String[][] structure;
 	private final List<Object> matchers = new ArrayList<>();
@@ -21,60 +35,30 @@ public class MultiblockStructureBuilder {
 	/**
 	 * 定义结构时必须有一个"0"的位置作为整个结构的中心位置
 	 *
-	 * @param structure 定义结构
+	 * @param structure 多维字符数组表示结构
 	 */
 	public MultiblockStructureBuilder(String[][] structure) {
 		this.structure = structure;
 	}
 
 	/**
-	 * 添加方块匹配规则
+	 * 定义结构中某个位置的匹配规则
 	 *
-	 * @param pos   结构中的字符标识
-	 * @param block 支持的匹配类型:
-	 *              - Block: 具体方块
-	 *              - BlockState: 具体方块状态
-	 *              - TagKey<Block>: 方块标签
-	 *              - IStateMatcher: 状态匹配器
+	 * @param pos     结构字符标识
+	 * @param handler Lambda 定义方块匹配规则
 	 * @return 构建器自身
 	 */
-	public MultiblockStructureBuilder define(char pos, Block block) {
-		matchers.add(pos);
-		matchers.add(block);
+	@Info("Defines the matching rule for a specific position in the structure\n定义结构中某个位置的匹配规则")
+	public MultiblockStructureBuilder define(char pos, Consumer<DefineBlockBuilder> handler) {
+		handler.accept(new DefineBlockBuilder(pos, matchers));
 		return this;
 	}
 
-	public MultiblockStructureBuilder define(char pos, TagKey<Block> tag) {
-		matchers.add(pos);
-		matchers.add(tag);
-		return this;
-	}
-
-	public MultiblockStructureBuilder define(char pos, IStateMatcher matcher) {
-		matchers.add(pos);
-		matchers.add(matcher);
-		return this;
-	}
-
-	public MultiblockStructureBuilder define(char pos, Block block, Predicate<BlockState> predicate) {
-		matchers.add(pos);
-		matchers.add(PatchouliAPI.get().predicateMatcher(block, predicate));
-		return this;
-	}
-
-	public MultiblockStructureBuilder define(char pos, Block block, ImmutableMap<Property<?>, ? extends Comparable<?>> stateMatcher) {
-		matchers.add(pos);
-		BlockState state = block.defaultBlockState();
-		for (Map.Entry<Property<?>, ? extends Comparable<?>> entry : stateMatcher.entrySet()) {
-			Property<?> property = entry.getKey();
-			Comparable<?> value = entry.getValue();
-			// 使用类型强制转换解决泛型问题
-			state = state.setValue((Property) property, (Comparable) value);
-		}
-		matchers.add(PatchouliAPI.get().stateMatcher(state));
-		return this;
-	}
-
+	/**
+	 * 构建 IMultiblock 对象
+	 *
+	 * @return Patchouli 多方块结构对象
+	 */
 	public IMultiblock build() {
 		return PatchouliAPI.get().makeMultiblock(structure, matchers.toArray());
 	}
