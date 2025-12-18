@@ -2,6 +2,7 @@ package top.nebula.utils.compat.kubejs.event.function;
 
 import dev.latvian.mods.kubejs.event.EventJS;
 import dev.latvian.mods.kubejs.fluid.FluidStackJS;
+import dev.latvian.mods.kubejs.typings.Info;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class FluidTooltipEventJS extends EventJS {
 	 * @param fluid   传入流体
 	 * @param handler 处理器
 	 */
+	@Info("Add tooltips to fluids in JEI or GUI\n\n为JEI和GUI中的流体添加Tooltip")
 	public void add(FluidStackJS fluid, Consumer<List<Component>> handler) {
 		if (fluid == null || fluidId == null) {
 			return;
