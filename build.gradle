@@ -115,6 +115,10 @@ dependencies {
     // Patchouli
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE")
+    // Jei
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:15.0.0.12")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:15.0.0.12")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.0.0.12")
 }
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
