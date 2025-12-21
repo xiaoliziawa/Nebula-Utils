@@ -56,16 +56,16 @@ public class NebulaUtils {
 	 * @return 转换的后得到的华氏度
 	 */
 	@Info("Celsius to Fahrenheit\n\n摄氏度转到华氏度")
-	public static double toFahrenheit(Object celsius) {
+	public static int toFahrenheit(Object celsius) {
 		if (celsius == null) {
-			return Double.NaN;
+			return 0;
 		}
 
 		if (celsius instanceof Number number) {
 			return (int) (number.doubleValue() * 9.0 / 5.0 + 32.0);
 		}
 
-		return Double.NaN;
+		return 0;
 	}
 
 	/**
