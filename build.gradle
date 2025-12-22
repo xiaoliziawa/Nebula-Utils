@@ -28,7 +28,7 @@ base {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
-    withSourcesJar()
+//    withSourcesJar()
 //    withJavadocJar()
 }
 
@@ -108,6 +108,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    // Create
+    implementation fg.deobf("curse.maven:create-328085:5838779")
     // KubeJS
     implementation fg.deobf("curse.maven:kubejs-238086:5853326")
     // Rhino
