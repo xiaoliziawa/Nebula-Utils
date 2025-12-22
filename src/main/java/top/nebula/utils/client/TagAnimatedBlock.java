@@ -13,13 +13,11 @@ import java.util.stream.Collectors;
 
 public class TagAnimatedBlock {
 	private static List<Block> getBlocks(TagKey<Block> tag) {
-		Minecraft client = Minecraft.getInstance();
-
-		if (client.level == null) {
+		if (Minecraft.getInstance().level == null) {
 			return List.of();
 		}
 
-		return client.level.registryAccess()
+		return Minecraft.getInstance().level.registryAccess()
 				.registryOrThrow(Registries.BLOCK)
 				.getTag(tag)
 				.map((block) -> {
