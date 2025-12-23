@@ -27,6 +27,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("PropertyImmutableMap", PropertyImmutableMap.class);
 
 		event.add("LocalDateTime", LocalDateTime.class);
+		event.add("Boolean", Boolean.class);
+		event.add("Integer", Integer.class);
+		event.add("Double", Double.class);
 
 		event.add("Rarity", Rarity.class);
 
