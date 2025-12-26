@@ -22,6 +22,8 @@ public class DefineBlockBuilder {
 
 	/**
 	 * 指定具体方块
+	 *
+	 * @param block 具体方块
 	 */
 	@Info("Specify a block\n\n指定具体方块")
 	public void block(Block block) {
@@ -31,6 +33,8 @@ public class DefineBlockBuilder {
 
 	/**
 	 * 指定具体方块状态
+	 *
+	 * @param state 方块状态
 	 */
 	@Info("Specify a block states\n\n指定具体方块状态")
 	public void state(BlockState state) {
