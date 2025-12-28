@@ -25,11 +25,11 @@ public abstract class AlterGroundDecoratorMixin {
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private void onPlaceBlockAt(TreeDecorator.Context context, BlockPos pos, CallbackInfo ci) {
+	private void onPlaceBlockAt(TreeDecorator.Context context, BlockPos pos, CallbackInfo info) {
 		if (!CommonConfig.isLargeSprucePodzolConversionEnabled()) {
 			BlockState state = this.provider.getState(context.random(), pos);
 			if (state.is(Blocks.PODZOL)) {
-				ci.cancel();
+				info.cancel();
 			}
 		}
 	}
