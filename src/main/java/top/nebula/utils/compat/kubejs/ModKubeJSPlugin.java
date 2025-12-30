@@ -11,6 +11,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,6 +39,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("PropertyImmutableMap", PropertyImmutableMap.class);
 		event.add("RegistryInfo", RegistryInfo.class);
 		event.add("LocalDateTime", LocalDateTime.class);
+		event.add("InteractionHand", InteractionHand.class);
 		event.add("Rarity", Rarity.class);
 		event.add("ItemTags", ItemTags.class);
 		event.add("BlockTags", BlockTags.class);
