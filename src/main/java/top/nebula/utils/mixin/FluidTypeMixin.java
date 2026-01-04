@@ -54,13 +54,7 @@ public abstract class FluidTypeMixin {
 	}
 
 	@Inject(method = "move", at = @At("HEAD"), remap = false)
-	private void nebula$move(
-			FluidState state,
-			LivingEntity entity,
-			Vec3 movementVector,
-			double gravity,
-			CallbackInfoReturnable<Boolean> cir
-	) {
+	private void nebula$move(FluidState state, LivingEntity entity, Vec3 movementVector, double gravity, CallbackInfoReturnable<Boolean> cir) {
 		if (nebula$isBurningFluid(state)) {
 			entity.lavaHurt();
 		}
