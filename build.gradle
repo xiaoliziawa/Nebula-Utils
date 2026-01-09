@@ -183,3 +183,19 @@ tasks.withType(JavaCompile).configureEach {
      */
     options.compilerArgs << "-parameters"
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+
+            groupId = "top.nebula"
+            artifactId = "nebula_utils"
+            version = "1.5.0"
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
