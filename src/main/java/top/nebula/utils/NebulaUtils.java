@@ -22,7 +22,7 @@ public class NebulaUtils {
 	public static final Logger LOGGER = LogManager.getLogger("Nebula");
 
 	public NebulaUtils(FMLJavaModLoadingContext context) {
-		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/common.toml");
+		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/utils/common.toml");
 	}
 
 	/**
