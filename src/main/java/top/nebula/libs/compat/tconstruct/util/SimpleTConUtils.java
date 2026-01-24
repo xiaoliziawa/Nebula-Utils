@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.NonNullConsumer;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class SimpleTConUtils {
+
 	public static ResourceLocation getLocationKey(String key) {
 		return ResourceLocation.parse(key);
 	}
@@ -97,3 +99,4 @@ public class SimpleTConUtils {
 		entity.getCapability(TinkerDataCapability.CAPABILITY).ifPresent(consumer);
 	}
 }
+

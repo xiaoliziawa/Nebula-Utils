@@ -14,10 +14,11 @@ public class FluidTooltipEventJS extends EventJS {
 	private final List<Component> tooltip;
 	private final List<Consumer<List<Component>>> queuedAdds = new ArrayList<>();
 
-	public FluidTooltipEventJS(FluidStackJS fluid, List<Component> hanlder) {
+	public FluidTooltipEventJS(FluidStackJS fluid, List<Component> handler) {
 		this.fluidId = fluid;
-		this.tooltip = hanlder;
+		this.tooltip = handler;
 	}
+
 
 	public FluidStackJS getFluid() {
 		return fluidId;
@@ -31,7 +32,7 @@ public class FluidTooltipEventJS extends EventJS {
 	 * })
 	 *
 	 * event.add("minecraft:lava", (tooltip) => {
-	 *     tooltip.add(Component.xxxx("aaaa"))
+	 *     tooltip.add(Component.xxxx("aaa"))
 	 * })
 	 * </code></pre>
 	 *

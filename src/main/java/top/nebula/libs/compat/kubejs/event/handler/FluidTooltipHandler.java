@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.libs.compat.kubejs.event.NebulaEvents;
 import top.nebula.libs.compat.kubejs.event.function.FluidTooltipEventJS;
@@ -22,6 +23,9 @@ import java.util.List;
 public class FluidTooltipHandler {
 	@SubscribeEvent
 	public static void onGatherTooltip(RenderTooltipEvent.GatherComponents event) {
+		if (!KJS) {
+			return;
+		}
 		ItemStack item = event.getItemStack();
 		List<Either<FormattedText, TooltipComponent>> elements = event.getTooltipElements();
 
@@ -63,4 +67,6 @@ public class FluidTooltipHandler {
 			insertIndex++;
 		}
 	}
+
+	public static final boolean KJS = ModList.get().isLoaded("kubejs");
 }

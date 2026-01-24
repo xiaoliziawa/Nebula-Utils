@@ -6,6 +6,7 @@ import top.nebula.libs.compat.kubejs.event.function.FluidTooltipEventJS;
 
 public interface NebulaEvents {
 	EventGroup GROUP = EventGroup.of("NebulaEvents");
+
 	EventHandler FLUID_TOOLTIP = GROUP.client("fluidTooltip", () -> {
 		return FluidTooltipEventJS.class;
 	});

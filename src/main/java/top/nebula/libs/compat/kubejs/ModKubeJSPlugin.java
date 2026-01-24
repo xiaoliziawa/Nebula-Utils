@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.libs.NebulaLibs;
 import top.nebula.libs.compat.kubejs.event.NebulaEvents;
@@ -26,6 +27,9 @@ import java.time.LocalDateTime;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerEvents() {
+		if (!KJS) {
+			return;
+		}
 		super.registerEvents();
 
 		NebulaEvents.GROUP.register();
@@ -33,8 +37,10 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 
 	public void registerBindings(BindingsEvent event) {
 		super.registerBindings(event);
-
-		event.add("NebulaUtils", NebulaLibs.class);
+		if (!KJS) {
+			return;
+		}
+		event.add("NebulaLibs", NebulaLibs.class);
 		event.add("MultiblockStructureBuilder", MultiblockStructureBuilder.class);
 		event.add("DefineBlockBuilder", DefineBlockBuilder.class);
 		event.add("PropertyImmutableMap", PropertyImmutableMap.class);
@@ -57,4 +63,6 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("ParticleTypes", ParticleTypes.class);
 		event.add("AllParticleTypes", AllParticleTypes.class);
 	}
+
+	public static final boolean KJS = ModList.get().isLoaded("kubejs");
 }
