@@ -1,4 +1,4 @@
-package top.nebula.libs.multiblock;
+package top.nebula.libs.compat.patchouli.multiblock;
 
 import com.google.common.collect.ImmutableMap;
 import dev.latvian.mods.kubejs.typings.Info;

@@ -1,4 +1,4 @@
-package top.nebula.libs.multiblock;
+package top.nebula.libs.compat.patchouli.multiblock;
 
 import dev.latvian.mods.kubejs.typings.Info;
 import vazkii.patchouli.api.IMultiblock;
