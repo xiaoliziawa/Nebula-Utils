@@ -24,6 +24,14 @@ public abstract class AbstractTagBuilder<T> {
 		return namespace("forge");
 	}
 
+	public AbstractTagBuilder<T> tconstruct() {
+		return namespace("tconstruct");
+	}
+
+	public AbstractTagBuilder<T> create() {
+		return namespace("create");
+	}
+
 	public AbstractTagBuilder<T> custom(String modid) {
 		return namespace(modid);
 	}
