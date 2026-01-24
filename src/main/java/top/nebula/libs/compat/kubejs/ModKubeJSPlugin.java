@@ -18,6 +18,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.libs.NebulaLibs;
+import top.nebula.libs.compat.CompatDetector;
 import top.nebula.libs.compat.kubejs.event.NebulaEvents;
 import top.nebula.libs.compat.patchouli.multiblock.DefineBlockBuilder;
 import top.nebula.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerEvents() {
-		if (!KJS) {
+		if (!CompatDetector.KJS) {
 			return;
 		}
 		super.registerEvents();
@@ -37,7 +38,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 
 	public void registerBindings(BindingsEvent event) {
 		super.registerBindings(event);
-		if (!KJS) {
+		if (!CompatDetector.KJS) {
 			return;
 		}
 		event.add("NebulaLibs", NebulaLibs.class);
@@ -64,5 +65,5 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("AllParticleTypes", AllParticleTypes.class);
 	}
 
-	public static final boolean KJS = ModList.get().isLoaded("kubejs");
+
 }
