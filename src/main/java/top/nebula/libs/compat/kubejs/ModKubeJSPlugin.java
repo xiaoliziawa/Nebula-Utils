@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.libs.NebulaLibs;
 import top.nebula.libs.compat.kubejs.event.NebulaEvents;
@@ -26,14 +27,14 @@ import java.time.LocalDateTime;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerEvents() {
-			super.registerEvents();
+		super.registerEvents();
 
 		NebulaEvents.GROUP.register();
 	}
 
 	public void registerBindings(BindingsEvent event) {
 		super.registerBindings(event);
-			event.add("NebulaLibs", NebulaLibs.class);
+		event.add("NebulaLibs", NebulaLibs.class);
 		event.add("MultiblockStructureBuilder", MultiblockStructureBuilder.class);
 		event.add("DefineBlockBuilder", DefineBlockBuilder.class);
 		event.add("PropertyImmutableMap", PropertyImmutableMap.class);
@@ -52,9 +53,11 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("ChatFormatting", ChatFormatting.class);
 		event.add("ForgeRegistries", ForgeRegistries.class);
 		event.add("BuiltInRegistries", BuiltInRegistries.class);
-		event.add("AllSoundEvents", AllSoundEvents.class);
 		event.add("ParticleTypes", ParticleTypes.class);
-		event.add("AllParticleTypes", AllParticleTypes.class);
+		if (ModList.get().isLoaded("create")) {
+			event.add("AllSoundEvents", AllSoundEvents.class);
+			event.add("AllParticleTypes", AllParticleTypes.class);
+		}
 	}
 
 
