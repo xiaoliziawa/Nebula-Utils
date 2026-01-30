@@ -18,7 +18,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.libs.NebulaLibs;
 import top.nebula.libs.compat.ICheckModLoaded;
-import top.nebula.libs.compat.kubejs.event.NebulaEvents;
 import top.nebula.libs.compat.patchouli.multiblock.DefineBlockBuilder;
 import top.nebula.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
 import top.nebula.libs.compat.patchouli.multiblock.PropertyImmutableMap;
@@ -28,8 +27,6 @@ import java.time.LocalDateTime;
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerEvents() {
 		super.registerEvents();
-
-		NebulaEvents.GROUP.register();
 	}
 
 	public void registerBindings(BindingsEvent event) {
