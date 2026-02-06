@@ -14,11 +14,12 @@ import org.jetbrains.annotations.NotNull;
 import top.nebula.libs.compat.jei.function.DrawHandler;
 import top.nebula.libs.compat.jei.function.TooltipHandler;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
-	public static <T> Builder<T> builder(RecipeType<T> type, IGuiHelper helper) {
-		return new Builder<>(type, helper);
+	public static <T> Builder<T> builder(RecipeType<T> type) {
+		return new Builder<>(type);
 	}
 
 	private final RecipeType<T> recipeType;
@@ -29,9 +30,9 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 	private final int height;
 	private final TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup> recipeHandler;
 	private final DrawHandler<T> drawHandler;
+	private final TooltipHandler<T> tooltipHandler;
 
-	public SimpleJeiCategory(Builder<T> builder) {
-
+	private SimpleJeiCategory(Builder<T> builder) {
 		this.recipeType = builder.recipeType;
 		this.title = builder.title;
 		this.background = builder.background;
@@ -40,6 +41,7 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 		this.height = builder.height;
 		this.recipeHandler = builder.recipeHandler;
 		this.drawHandler = builder.drawHandler;
+		this.tooltipHandler = builder.tooltipHandler;
 	}
 
 	@Override
@@ -73,20 +75,30 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 	}
 
 	@Override
-	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull T recipe, @NotNull IFocusGroup focuses) {
+	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull T recipe, @NotNull IFocusGroup group) {
 		if (recipeHandler != null) {
-			recipeHandler.accept(builder, recipe, focuses);
+			recipeHandler.accept(builder, recipe, group);
 		}
 	}
 
 	@Override
 	public void draw(@NotNull T recipe, @NotNull IRecipeSlotsView view, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
-		if (drawHandler != null)
+		if (drawHandler != null) {
 			drawHandler.draw(recipe, view, graphics, mouseX, mouseY);
+		}
+	}
+
+	@Override
+	public @NotNull List<Component> getTooltipStrings(@NotNull T recipe, @NotNull IRecipeSlotsView view, double mouseX, double mouseY) {
+		if (tooltipHandler != null) {
+			return tooltipHandler.getTooltips(recipe, view, mouseX, mouseY);
+		}
+		return List.of();
 	}
 
 	public static class Builder<T> {
 		private final RecipeType<T> recipeType;
+
 		private Component title = Component.empty();
 		private IDrawable background;
 		private Supplier<IDrawable> iconSupplier;
@@ -96,10 +108,14 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 
 		private TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup> recipeHandler;
 		private DrawHandler<T> drawHandler;
+		private TooltipHandler<T> tooltipHandler;
 
 		private Builder(RecipeType<T> type, IGuiHelper helper) {
 			this.recipeType = type;
-			this.background = helper.createBlankDrawable(0, 0);
+		}
+
+		private Builder(RecipeType<T> type) {
+			this.recipeType = type;
 		}
 
 		public Builder<T> setTitle(Component title) {
@@ -123,10 +139,6 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 			return this;
 		}
 
-		public Builder<T> setTooltips(TooltipHandler<T> handler) {
-			return this;
-		}
-
 		public Builder<T> setRecipe(TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup> handler) {
 			this.recipeHandler = handler;
 			return this;
@@ -134,6 +146,11 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 
 		public Builder<T> setDraw(DrawHandler<T> handler) {
 			this.drawHandler = handler;
+			return this;
+		}
+
+		public Builder<T> setTooltips(TooltipHandler<T> handler) {
+			this.tooltipHandler = handler;
 			return this;
 		}
 
