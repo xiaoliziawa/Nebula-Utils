@@ -24,6 +24,7 @@ import top.nebula.libs.compat.curios.CuriosUtils;
 import top.nebula.libs.compat.patchouli.multiblock.DefineBlockBuilder;
 import top.nebula.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
 import top.nebula.libs.compat.patchouli.multiblock.PropertyImmutableMap;
+import top.nebula.libs.tags.TagsBuilder;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.time.LocalDateTime;
@@ -56,6 +57,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("ForgeRegistries", ForgeRegistries.class);
 		event.add("BuiltInRegistries", BuiltInRegistries.class);
 		event.add("ParticleTypes", ParticleTypes.class);
+		event.add("TagsBuidlder", TagsBuilder.class);
 
 		if (ICheckModLoaded.hasCreate()) {
 			event.add("AllSoundEvents", AllSoundEvents.class);
