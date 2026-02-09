@@ -135,6 +135,11 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 			return this;
 		}
 
+		public Builder<T> setTitle(String title) {
+			this.title = Component.literal(title);
+			return this;
+		}
+
 		public Builder<T> setSize(int width, int height) {
 			this.width = width;
 			this.height = height;
