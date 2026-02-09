@@ -9,10 +9,11 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jetbrains.annotations.NotNull;
-import top.nebula.libs.compat.jei.function.DrawHandler;
-import top.nebula.libs.compat.jei.function.TooltipHandler;
+import top.nebula.libs.compat.jei.function.IDrawHandler;
+import top.nebula.libs.compat.jei.function.ITooltipHandler;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -22,6 +23,10 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 		return new Builder<>(type);
 	}
 
+	public static <T> Builder<T> builder(RecipeType<T> type, IGuiHelper helper) {
+		return new Builder<>(type, helper);
+	}
+
 	private final RecipeType<T> recipeType;
 	private final Component title;
 	private final IDrawable background;
@@ -29,8 +34,8 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 	private final int width;
 	private final int height;
 	private final TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup> recipeHandler;
-	private final DrawHandler<T> drawHandler;
-	private final TooltipHandler<T> tooltipHandler;
+	private final IDrawHandler<T> drawHandler;
+	private final ITooltipHandler<T> tooltipHandler;
 
 	private SimpleJeiCategory(Builder<T> builder) {
 		this.recipeType = builder.recipeType;
@@ -98,6 +103,7 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 
 	public static class Builder<T> {
 		private final RecipeType<T> recipeType;
+		private final IGuiHelper helper;
 
 		private Component title = Component.empty();
 		private IDrawable background;
@@ -107,15 +113,17 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 		private int height = 0;
 
 		private TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup> recipeHandler;
-		private DrawHandler<T> drawHandler;
-		private TooltipHandler<T> tooltipHandler;
-
-		private Builder(RecipeType<T> type, IGuiHelper helper) {
-			this.recipeType = type;
-		}
+		private IDrawHandler<T> drawHandler;
+		private ITooltipHandler<T> tooltipHandler;
 
 		private Builder(RecipeType<T> type) {
 			this.recipeType = type;
+			this.helper = null;
+		}
+
+		private Builder(RecipeType<T> type, IGuiHelper helper) {
+			this.recipeType = type;
+			this.helper = helper;
 		}
 
 		public Builder<T> setTitle(Component title) {
@@ -134,8 +142,28 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 			return this;
 		}
 
+		public Builder<T> setBackground(int width, int height) {
+			if (helper == null) {
+				throw new IllegalStateException("SimpleJeiCategory.Builder#setBackground(width, height) requires IGuiHelper");
+			}
+			this.background = helper.createBlankDrawable(width, height);
+			this.width = width;
+			this.height = height;
+			return this;
+		}
+
 		public Builder<T> setIcon(Supplier<IDrawable> iconSupplier) {
 			this.iconSupplier = iconSupplier;
+			return this;
+		}
+
+		public Builder<T> setIcon(ItemStack icon) {
+			this.iconSupplier = () -> {
+				if (helper != null) {
+					return helper.createDrawableItemStack(icon);
+				}
+				return null;
+			};
 			return this;
 		}
 
@@ -144,12 +172,12 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 			return this;
 		}
 
-		public Builder<T> setDraw(DrawHandler<T> handler) {
+		public Builder<T> setDraw(IDrawHandler<T> handler) {
 			this.drawHandler = handler;
 			return this;
 		}
 
-		public Builder<T> setTooltips(TooltipHandler<T> handler) {
+		public Builder<T> setTooltips(ITooltipHandler<T> handler) {
 			this.tooltipHandler = handler;
 			return this;
 		}

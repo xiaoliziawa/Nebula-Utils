@@ -6,6 +6,6 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 @FunctionalInterface
-public interface TooltipHandler<T> {
+public interface ITooltipHandler<T> {
 	List<Component> getTooltips(T recipe, IRecipeSlotsView view, double mouseX, double mouseY);
 }
