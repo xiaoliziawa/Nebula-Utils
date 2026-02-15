@@ -15,7 +15,7 @@ public class CuriosUtils {
 	 *
 	 * <p>如果实体没有 Curios 能力, 或未找到匹配物品, 则返回 {@code false}.</p>
 	 *
-	 * @param entity 要检查的生物实体（玩家或其他 LivingEntity）
+	 * @param entity 要检查的生物实体(玩家或其他 LivingEntity)
 	 * @param item   需要匹配的物品
 	 * @return 如果实体的 Curios 栏位中包含该物品则返回 {@code true}, 否则返回 {@code false}
 	 */
