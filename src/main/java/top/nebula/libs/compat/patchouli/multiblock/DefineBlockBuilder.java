@@ -10,7 +10,39 @@ import vazkii.patchouli.api.PatchouliAPI;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.function.Consumer;
 
+/**
+ * 用于定义 Patchouli 多方块结构中某个字符位置的匹配规则Examples
+ *
+ * <p>
+ * 在 {@link MultiblockStructureBuilder#define(char, Consumer)} 中使用，
+ * 每一个结构字符都可以通过该构建器定义其对应的方块匹配逻辑.
+ * </p>
+ *
+ * <p>
+ * 内部通过向 matchers 列表写入成对数据：
+ * <pre>
+ * [pos, matcher, pos, matcher, ...]
+ * </pre>
+ * 最终由 {@link PatchouliAPI.IPatchouliAPI#makeMultiblock} 统一解析.
+ * </p>
+ *
+ * <h2>支持的匹配方式</h2>
+ * <ul>
+ *     <li>指定具体方块</li>
+ *     <li>指定具体 BlockState</li>
+ *     <li>指定 TagKey&lt;Block&gt;</li>
+ *     <li>任意方块匹配</li>
+ *     <li>方块 + Predicate&lt;BlockState&gt;</li>
+ *     <li>方块 + 状态映射</li>
+ * </ul>
+ *
+ * <p>
+ * 该类仅作为 DSL 辅助工具，不持有任何结构逻辑，
+ * 所有数据最终由 MultiblockStructureBuilder 统一收集.
+ * </p>
+ */
 public class DefineBlockBuilder {
 	private final char pos;
 	private final List<Object> matchers;

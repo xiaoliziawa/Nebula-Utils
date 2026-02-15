@@ -19,6 +19,181 @@ import top.nebula.libs.compat.jei.function.ITooltipHandler;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * <p>
+ * SimpleJeiCategory 是一个通用的 JEI IRecipeCategory 实现,
+ * 通过 Builder 模式封装分类的完整构建流程,
+ * 用于统一模组内所有 JEI 分类的注册结构.
+ * </p>
+ *
+ * <p>
+ * 在原生 JEI 使用方式中,
+ * 每个分类都需要手动实现 IRecipeCategory,
+ * 并重复编写标题, 背景, 图标, setRecipe, draw 等方法.
+ * 当分类数量增加时,
+ * 代码会变得分散且重复度较高.
+ * </p>
+ *
+ * <p>
+ * 本类将分类构建逻辑抽象为链式 API,
+ * 通过多种重载写法提供灵活配置方式,
+ * 使分类定义更加声明式,
+ * 同时保持注册结构统一.
+ * </p>
+ *
+ * <h2>完整使用流程</h2>
+ *
+ * <h3>1. 在 @JeiPlugin 主类中注册分类</h3>
+ *
+ * <pre>{@code
+ * @JeiPlugin
+ * public class ModJeiPlugin implements IModPlugin {
+ *     @Override
+ *     public ResourceLocation getPluginUid() {
+ *         return ResourceLocation.fromNamespaceAndPath("modid", "jei_plugin");
+ *     }
+ *
+ *     @Override
+ *     public void registerCategories(IRecipeCategoryRegistration registration) {
+ *         IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
+ *
+ *         registration.addRecipeCategories(ExamplesCategory.builder(helper));
+ *     }
+ * }
+ * }</pre>
+ *
+ * <h3>2. 在具体分类类中构建</h3>
+ *
+ * <pre>{@code
+ * public static SimpleJeiCategory<ExamplesRecipe> builder(IGuiHelper helper) {
+ *     return SimpleJeiCategory.builder(RECIPE_TYPE, helper)
+ *         .setTitle(Component.literal("Examples"))
+ *         .setSize(178, 72)
+ *         .setIcon(() -> iconSupplier)
+ *         .setRecipe((builder, recipe, group) -> {
+ *             // 添加输入输出槽位
+ *         })
+ *         .setDraw((recipe, view, graphics, mouseX, mouseY) -> {
+ *             // 额外渲染逻辑
+ *         })
+ *         .build();
+ * }
+ * }</pre>
+ *
+ * <h2>Builder 创建方式重载</h2>
+ *
+ * <ul>
+ *     <li>
+ *         builder(RecipeType<T> type)
+ *         <br>
+ *         不依赖 IGuiHelper.
+ *         需要手动提供背景与图标.
+ *     </li>
+ *
+ *     <li>
+ *         builder(RecipeType<T> type, IGuiHelper helper)
+ *         <br>
+ *         推荐使用方式.
+ *         支持自动创建空白背景与默认图标,
+ *         并允许使用 setIcon(ItemStack) 简化写法.
+ *     </li>
+ * </ul>
+ *
+ * <h2>方法重载说明</h2>
+ *
+ * <ul>
+ *     <li>
+ *         setTitle(Component title)
+ *         <br>
+ *         适用于可翻译文本或复杂样式.
+ *     </li>
+ *
+ *     <li>
+ *         setTitle(String literal)
+ *         <br>
+ *         简化写法, 自动包装为 Component.literal().
+ *     </li>
+ *
+ *     <li>
+ *     *   setTranTitle(String tranKey)
+ *         <br>
+ *         简化写法, 自动包装为 Component.translatable().
+ *     </li>
+ *
+ *     <li>
+ *         setBackground(IDrawable background)
+ *         <br>
+ *         直接提供自定义背景对象.
+ *     </li>
+ *
+ *     <li>
+ *         setBackground(int width, int height)
+ *         <br>
+ *         通过 IGuiHelper 创建空白背景.
+ *         若未调用且存在 helper,
+ *         默认使用 setSize 尺寸生成背景.
+ *     </li>
+ *
+ *     <li>
+ *         setIcon(Supplier<IDrawable> supplier)
+ *         <br>
+ *         延迟生成图标.
+ *         适用于复杂或动态 Drawable.
+ *     </li>
+ *
+ *     <li>
+ *         setIcon(ItemStack stack)
+ *         <br>
+ *         简化写法,
+ *         通过 IGuiHelper 自动生成物品图标.
+ *         仅在存在 helper 时可用.
+ *     </li>
+ * </ul>
+ *
+ * <h2>行为扩展接口</h2>
+ *
+ * <ul>
+ *     <li>
+ *         setRecipe(TriConsumer<IRecipeLayoutBuilder, T, IFocusGroup>)
+ *         <br>
+ *         定义配方槽位布局逻辑.
+ *     </li>
+ *
+ *     <li>
+ *         setDraw(IDrawHandler<T>)
+ *         <br>
+ *         自定义额外渲染逻辑.
+ *     </li>
+ *
+ *     <li>
+ *         setTooltips(ITooltipHandler<T>)
+ *         <br>
+ *         自定义 Tooltip 内容生成逻辑.
+ *     </li>
+ * </ul>
+ *
+ * <h2>自动行为说明</h2>
+ *
+ * <ul>
+ *     <li>
+ *         若存在 helper 且未设置背景,
+ *         build() 时自动创建空白背景.
+ *     </li>
+ *
+ *     <li>
+ *         若存在 helper 且未设置图标,
+ *         build() 时自动创建 16x16 空白图标.
+ *     </li>
+ * </ul>
+ *
+ * <p>
+ * 本类不改变 JEI 生命周期与调用顺序,
+ * 仅对 IRecipeCategory 进行结构性封装,
+ * 提供多种重载写法以增强灵活性与可读性.
+ * </p>
+ *
+ * @param <T> 配方类型
+ */
 public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 	public static <T> Builder<T> builder(RecipeType<T> type) {
 		return new Builder<>(type);
@@ -137,6 +312,11 @@ public class SimpleJeiCategory<T> implements IRecipeCategory<T> {
 
 		public Builder<T> setTitle(String title) {
 			this.title = Component.literal(title);
+			return this;
+		}
+
+		public Builder<T> setTranTitle(String tranKey) {
+			this.title = Component.translatable(tranKey);
 			return this;
 		}
 
