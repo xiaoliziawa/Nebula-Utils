@@ -5,8 +5,8 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "nebula_libs.refmap.json",
 	"mixins": [
-		"AlterGroundDecoratorMixin",
-		"FluidTypeMixin"
+		"dev.nebula.libs.mixin.AlterGroundDecoratorMixin",
+		"dev.nebula.libs.mixin.FluidTypeMixin"
 	],
 	"client": [
 	],
