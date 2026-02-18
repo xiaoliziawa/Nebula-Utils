@@ -1,5 +1,6 @@
 package dev.celestiacraft.libs.tags.type;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
@@ -11,7 +12,7 @@ public class FluidTag extends AbstractTagBuilder<Fluid> {
 	}
 
 	@Override
-	public TagKey<Fluid> build() {
-		return FluidTags.create(id());
+	protected TagKey<Fluid> build(ResourceLocation id) {
+		return FluidTags.create(id);
 	}
 }

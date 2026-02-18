@@ -1,5 +1,6 @@
 package dev.celestiacraft.libs.tags.type;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -11,7 +12,7 @@ public class BlockTag extends AbstractTagBuilder<Block> {
 	}
 
 	@Override
-	public TagKey<Block> build() {
-		return BlockTags.create(id());
+	protected TagKey<Block> build(ResourceLocation id) {
+		return BlockTags.create(id);
 	}
 }

@@ -1,5 +1,6 @@
 package dev.celestiacraft.libs.tags.type;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -11,7 +12,7 @@ public class ItemTag extends AbstractTagBuilder<Item> {
 	}
 
 	@Override
-	public TagKey<Item> build() {
-		return ItemTags.create(id());
+	protected TagKey<Item> build(ResourceLocation id) {
+		return ItemTags.create(id);
 	}
 }

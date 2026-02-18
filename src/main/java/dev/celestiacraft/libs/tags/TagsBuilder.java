@@ -4,82 +4,97 @@ import dev.celestiacraft.libs.tags.type.BlockTag;
 import dev.celestiacraft.libs.tags.type.EntityTypeTag;
 import dev.celestiacraft.libs.tags.type.FluidTag;
 import dev.celestiacraft.libs.tags.type.ItemTag;
+import net.minecraft.tags.TagKey;
 
 /**
- * Tag 构建工厂类.
+ * <h2>TagsBuilder</h2>
  *
  * <p>
- * 该类作为各类 TagBuilder 的统一入口,
- * 用于根据标签类型快速创建对应的构建器实例.
+ * Tag 构建统一入口工厂类.
  * </p>
  *
  * <p>
- * 通过该类可以避免直接 new 具体类型的 TagBuilder,
- * 使代码更加语义化和集中化.
+ * 该类作为各类型 TagBuilder 的集中访问点,
+ * 用于根据注册类型快速创建对应的标签构建器实例,
+ * 从而避免直接实例化具体实现类.
  * </p>
  *
- * <h2>支持的标签类型</h2>
+ * <hr>
+ *
+ * <h3>设计目标</h3>
+ *
  * <ul>
- *     <li>BlockTag</li>
- *     <li>ItemTag</li>
- *     <li>FluidTag</li>
- *     <li>EntityTypeTag</li>
+ *     <li>提供语义化的标签创建入口</li>
+ *     <li>隐藏具体 TagBuilder 实现类</li>
+ *     <li>统一不同注册类型的构建方式</li>
+ *     <li>提高代码可读性与一致性</li>
  * </ul>
  *
- * <h2>示例</h2>
+ * <hr>
+ *
+ * <h3>支持的标签类型</h3>
+ *
+ * <ul>
+ *     <li>Block</li>
+ *     <li>Item</li>
+ *     <li>Fluid</li>
+ *     <li>EntityType</li>
+ * </ul>
+ *
+ * <hr>
+ *
+ * <h3>使用示例</h3>
  *
  * <pre>{@code
- * TagKey<Block> blockTag = TagsBuilder.block("example")
- *         .forge()
- *         .build();
+ * // forge:steam
+ * TagKey<Fluid> steam = TagsBuilder.fluid("steam")
+ *     .forge();
  *
+ * // forge:example
+ * TagKey<Block> blockTag = TagsBuilder.block("example")
+ *     .forge();
+ *
+ * // ccb:example_item
  * TagKey<Item> itemTag = TagsBuilder.item("example_item")
- *         .custom("mymod")
- *         .build();
+ *     .custom("ccb");
+ *
+ * // minecraft:logs
+ * TagKey<Block> logs = TagsBuilder.block("logs")
+ *     .vanilla();
  * }</pre>
  *
  * <p>
- * 具体的 namespace 设置与构建逻辑由 AbstractTagBuilder 及其子类实现.
+ * 调用流程语义为：
  * </p>
+ *
+ * <ol>
+ *     <li>选择标签所属注册类型(block / item / fluid / entity)</li>
+ *     <li>指定标签路径(name)</li>
+ *     <li>通过 namespace 终态方法直接获得 {@link TagKey}</li>
+ * </ol>
+ *
+ * <hr>
+ *
+ * <p>
+ * 该类本身不包含构建逻辑, 
+ * 具体 TagKey 创建行为由各类型 Builder 实现.
+ * </p>
+ *
+ * @see AbstractTagBuilder
  */
 public class TagsBuilder {
-
-	/**
-	 * 创建一个方块标签构建器.
-	 *
-	 * @param name 标签路径
-	 * @return BlockTag 构建器
-	 */
 	public static BlockTag block(String name) {
 		return new BlockTag(name);
 	}
 
-	/**
-	 * 创建一个物品标签构建器.
-	 *
-	 * @param name 标签路径
-	 * @return ItemTag 构建器
-	 */
 	public static ItemTag item(String name) {
 		return new ItemTag(name);
 	}
 
-	/**
-	 * 创建一个流体标签构建器.
-	 *
-	 * @param name 标签路径
-	 * @return FluidTag 构建器
-	 */
 	public static FluidTag fluid(String name) {
 		return new FluidTag(name);
 	}
 
-	/**
-	 * 创建一个实体类型标签构建器.
-	 *
-	 * @param name 标签路径
-	 * @return EntityTypeTag 构建器
-	 */
 	public static EntityTypeTag entity(String name) {
 		return new EntityTypeTag(name);
 	}
