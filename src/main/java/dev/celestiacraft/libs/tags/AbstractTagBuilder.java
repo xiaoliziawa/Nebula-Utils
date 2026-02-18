@@ -19,7 +19,7 @@ import net.minecraft.tags.TagKey;
  * <p>
  * 在 Minecraft 原生 API 中, 创建一个 TagKey 通常需要显式构造
  * {@link ResourceLocation}, 
- * 并调用对应类型的 create 方法, 例如：
+ * 并调用对应类型的 create 方法, 例如: 
  * </p>
  *
  * <pre>{@code
@@ -33,7 +33,7 @@ import net.minecraft.tags.TagKey;
  * </p>
  *
  * <p>
- * 本抽象类的目标是：
+ * 本抽象类的目标是: 
  * 将 "标签路径" 与 "命名空间选择" 拆分为两个明确阶段, 
  * 并通过终态 namespace 方法直接返回最终 {@link TagKey}, 
  * 使 API 语义与 Minecraft 标签结构完全对齐.
@@ -75,7 +75,7 @@ import net.minecraft.tags.TagKey;
  * }</pre>
  *
  * <p>
- * 上述写法读作：
+ * 上述写法读作: 
  * "路径为 stone 的标签, 位于 forge 命名空间".
  * </p>
  *
@@ -90,7 +90,7 @@ import net.minecraft.tags.TagKey;
  * </ul>
  *
  * <p>
- * 这是一个"终态构建模型"：
+ * 这是一个"终态构建模型": 
  * namespace 选择即构建行为本身.
  * </p>
  *
@@ -104,7 +104,7 @@ import net.minecraft.tags.TagKey;
  * </p>
  *
  * <p>
- * 例如：
+ * 例如: 
  * </p>
  *
  * <ul>
