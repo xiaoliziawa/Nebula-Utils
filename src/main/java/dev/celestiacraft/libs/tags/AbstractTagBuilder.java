@@ -23,8 +23,9 @@ import net.minecraft.tags.TagKey;
  * </p>
  *
  * <pre>{@code
- * TagKey<Item> tag =
- *     ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "stone"));
+ * TagKey<Item> tag = ItemTags.create(
+ *     ResourceLocation.fromNamespaceAndPath("forge", "stone")
+ * );
  * }</pre>
  *
  * <p>

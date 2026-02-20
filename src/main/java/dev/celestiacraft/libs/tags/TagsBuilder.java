@@ -91,7 +91,7 @@ public class TagsBuilder {
 		return new ItemTag(name);
 	}
 
-	public static FluidTag fluid(String name) {
+	public static FluidTag fluid    (String name) {
 		return new FluidTag(name);
 	}
 
