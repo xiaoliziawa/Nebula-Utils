@@ -23,6 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,12 +51,16 @@ public class InlineItemTooltipHandler {
 
 		for (int i = 0; i < elements.size(); i++) {
 			Either<FormattedText, TooltipComponent> entry = elements.get(i);
-			var leftOpt = entry.left();
-			if (leftOpt.isEmpty()) continue;
+			Optional<FormattedText> leftOpt = entry.left();
+			if (leftOpt.isEmpty()) {
+				continue;
+			}
 
 			FormattedText text = leftOpt.get();
 			String str = text.getString();
-			if (!ITEM_PATTERN.matcher(str).find()) continue;
+			if (!ITEM_PATTERN.matcher(str).find()) {
+				continue;
+			}
 
 			// 提取 Component 的 Style, 转换为 § 代码前缀
 			String stylePrefix = "";
@@ -122,12 +127,12 @@ public class InlineItemTooltipHandler {
 	}
 
 	/**
-	 * 提取文本开头连续的 § 格式代码 (如 "§b§l" → "§b§l").
+	 * 提取文本开头连续的 § 格式代码 (如 "§b§l" => "§b§l").
 	 */
 	private static String extractLeadingFormatCodes(String text) {
 		StringBuilder codes = new StringBuilder();
 		int i = 0;
-		while (i + 1 < text.length() && text.charAt(i) == '\u00A7') {
+		while (i + 1 < text.length() && text.charAt(i) == '§') {
 			codes.append(text, i, i + 2);
 			i += 2;
 		}
@@ -141,11 +146,14 @@ public class InlineItemTooltipHandler {
 	 */
 	private static String styleToFormatCode(Style style) {
 		TextColor color = style.getColor();
-		if (color == null) return "";
+
+		if (color == null) {
+			return "";
+		}
 		int colorValue = color.getValue();
 		for (ChatFormatting cf : ChatFormatting.values()) {
 			if (cf.isColor() && cf.getColor() != null && cf.getColor() == colorValue) {
-				return "\u00A7" + cf.getChar();
+				return "§" + cf.getChar();
 			}
 		}
 		return "";

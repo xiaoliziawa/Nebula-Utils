@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.util.List;
@@ -18,7 +19,6 @@ import java.util.List;
  * 支持每个物品图标独立的缩放比例.
  */
 public class InlineItemClientTooltipComponent implements ClientTooltipComponent {
-
 	private static final int FONT_HEIGHT = 9;
 	private static final int TEXT_LINE_HEIGHT = 10;
 	private static final int ITEM_SPACER = 1;
@@ -43,7 +43,7 @@ public class InlineItemClientTooltipComponent implements ClientTooltipComponent 
 	}
 
 	@Override
-	public int getWidth(Font font) {
+	public int getWidth(@NotNull Font font) {
 		int width = 0;
 		for (Segment seg : segments) {
 			if (seg instanceof TextSegment ts) {
@@ -57,7 +57,7 @@ public class InlineItemClientTooltipComponent implements ClientTooltipComponent 
 	}
 
 	@Override
-	public void renderText(Font font, int x, int y, Matrix4f matrix, MultiBufferSource.BufferSource bufferSource) {
+	public void renderText(@NotNull Font font, int x, int y, @NotNull Matrix4f matrix, MultiBufferSource.@NotNull BufferSource bufferSource) {
 		float ox = x;
 		float textY = y + (lineHeight - FONT_HEIGHT) / 2.0f;
 		for (Segment seg : segments) {
@@ -75,7 +75,7 @@ public class InlineItemClientTooltipComponent implements ClientTooltipComponent 
 	}
 
 	@Override
-	public void renderImage(Font font, int x, int y, GuiGraphics guiGraphics) {
+	public void renderImage(@NotNull Font font, int x, int y, @NotNull GuiGraphics guiGraphics) {
 		float ox = x;
 		for (Segment seg : segments) {
 			if (seg instanceof TextSegment ts) {
