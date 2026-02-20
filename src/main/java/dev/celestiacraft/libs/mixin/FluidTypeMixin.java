@@ -1,6 +1,5 @@
 package dev.celestiacraft.libs.mixin;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,6 +8,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,14 +30,14 @@ public abstract class FluidTypeMixin {
 	@Unique
 	private static boolean nebula$isBurningFluid(FluidState state) {
 		Fluid fluid = state.getType();
-		ResourceLocation id = BuiltInRegistries.FLUID.getKey(fluid);
+		ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);
 
 		for (String entry : CommonConfig.BURNING_FLUIDS.get()) {
 			if (entry.startsWith("#")) {
 				ResourceLocation tagId = ResourceLocation.tryParse(entry.substring(1));
 				if (tagId != null) {
 					TagKey<Fluid> tag = TagKey.create(
-							BuiltInRegistries.FLUID.key(),
+							ForgeRegistries.FLUIDS.getRegistryKey(),
 							tagId
 					);
 					if (fluid.is(tag)) {
@@ -45,7 +45,7 @@ public abstract class FluidTypeMixin {
 					}
 				}
 			} else {
-				if (id.toString().equals(entry)) {
+				if (id != null && id.toString().equals(entry)) {
 					return true;
 				}
 			}
