@@ -156,12 +156,10 @@ public abstract class AbstractTagBuilder<T> {
 
 	public TagKey<T> namespace(String namespace) {
 		if (namespace == null || namespace.isBlank()) {
-			throw new IllegalArgumentException("Tag namespace cannot be null for tag: " + name
-			);
+			throw new IllegalArgumentException("Tag namespace cannot be null for tag: " + name);
 		}
 
-		ResourceLocation id =
-				ResourceLocation.fromNamespaceAndPath(namespace, name);
+		ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace, name);
 
 		return create(id);
 	}

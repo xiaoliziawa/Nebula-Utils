@@ -80,7 +80,7 @@ import net.minecraft.world.level.material.Fluid;
  * <hr>
  *
  * <p>
- * 该类本身不包含构建逻辑, 
+ * 该类本身不包含构建逻辑,
  * 具体 TagKey 创建行为由各类型 Builder 实现.
  * </p>
  *
