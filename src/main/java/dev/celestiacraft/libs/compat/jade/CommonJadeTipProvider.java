@@ -47,7 +47,6 @@ import java.util.regex.Pattern;
  * }</pre>
  */
 public class CommonJadeTipProvider {
-
 	private static final Map<ResourceLocation, List<String>> TIPS = new HashMap<>();
 
 	private static final float DEFAULT_SCALE = 0.5F;
@@ -63,7 +62,9 @@ public class CommonJadeTipProvider {
 	 * @param tipText 提示文本, 可包含 {@code {modid:itemid}} 标记
 	 */
 	public static void addCommonJadeTipLang(String blockId, String tipText) {
-		TIPS.computeIfAbsent(ResourceLocation.parse(blockId), k -> new ArrayList<>()).add(tipText);
+		TIPS.computeIfAbsent(ResourceLocation.parse(blockId), (location) -> {
+			return new ArrayList<>();
+		}).add(tipText);
 	}
 
 	public static void removeTips(String blockId) {
