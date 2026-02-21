@@ -61,7 +61,9 @@ public class CommonJadeTipProvider {
 	);
 
 	public static void addCommonJadeTipLang(String blockId, String tipText) {
-		TIPS.computeIfAbsent(ResourceLocation.parse(blockId), k -> new ArrayList<>()).add(tipText);
+		TIPS.computeIfAbsent(ResourceLocation.parse(blockId), (location) -> {
+			return new ArrayList<>();
+		}).add(tipText);
 	}
 
 	public static void removeTips(String blockId) {
