@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.celestiacraft.libs.compat.jade.CommonJadeTipProvider;
 import dev.celestiacraft.libs.compat.tconstruct.util.SimpleTConUtils;
+import dev.celestiacraft.libs.wrapper.IntWrapper;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
@@ -68,6 +69,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("FluidClass", Fluid.class);
 		event.add("Item$Properties", Item.Properties.class);
 		event.add("BlockBehaviour$Properties", BlockBehaviour.Properties.class);
+		event.add("IntWrapper", IntWrapper.class);
 
 		if (ICheckModLoaded.hasCreate()) {
 			event.add("AllSoundEvents", AllSoundEvents.class);
