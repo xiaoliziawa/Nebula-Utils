@@ -1,5 +1,8 @@
 package dev.celestiacraft.libs.compat.kubejs;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.internal.GsonBuildConfig;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -70,6 +73,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("Item$Properties", Item.Properties.class);
 		event.add("BlockBehaviour$Properties", BlockBehaviour.Properties.class);
 		event.add("IntWrapper", IntWrapper.class);
+		event.add("Gson", Gson.class);
+		event.add("GsonBuilder", GsonBuilder.class);
+		event.add("GsonBuildConfig", GsonBuildConfig.class);
 
 		if (ICheckModLoaded.hasCreate()) {
 			event.add("AllSoundEvents", AllSoundEvents.class);
@@ -98,5 +104,8 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 			event.add("DefineBlockBuilder", DefineBlockBuilder.class);
 			event.add("PropertyImmutableMap", PropertyImmutableMap.class);
 		}
+	}
+
+	private class GsonBuildConfigc {
 	}
 }
