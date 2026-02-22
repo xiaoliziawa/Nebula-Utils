@@ -8,6 +8,7 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import dev.celestiacraft.libs.compat.jade.CommonJadeTipProvider;
+import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import dev.celestiacraft.libs.compat.tconstruct.util.SimpleTConUtils;
 import dev.celestiacraft.libs.wrapper.IntWrapper;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -31,9 +32,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.libs.NebulaLibs;
 import dev.celestiacraft.libs.compat.ICheckModLoaded;
 import dev.celestiacraft.libs.compat.curios.CuriosUtils;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.DefineBlockBuilder;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.MultiblockStructureBuilder;
-import dev.celestiacraft.libs.compat.patchouli.multiblock.PropertyImmutableMap;
 import dev.celestiacraft.libs.tags.TagsBuilder;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
@@ -103,6 +101,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 			event.add("MultiblockStructureBuilder", MultiblockStructureBuilder.class);
 			event.add("DefineBlockBuilder", DefineBlockBuilder.class);
 			event.add("PropertyImmutableMap", PropertyImmutableMap.class);
+			event.add("MultiblockHandler", MultiblockHandler.class);
+			event.add("MultiblockHandler$Builder", MultiblockHandler.Builder.class);
+			event.add("IMultiblockProvider", IMultiblockProvider.class);
 		}
 	}
 }
