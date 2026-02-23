@@ -43,7 +43,7 @@ import java.util.function.Supplier;
  *     });
  *
  *     private final MultiblockHandler multiblock = MultiblockHandler
- *         .builder(this, STRUCTURE::get)
+ *         .builder(this, STRUCTURE)
  *         .translationKey("multiblock.building.mymod.my_machine")
  *         .renderOffset(0, -1, 0)
  *         .cacheTicks(20)

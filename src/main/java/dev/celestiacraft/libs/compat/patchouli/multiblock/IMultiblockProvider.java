@@ -33,7 +33,7 @@ import dev.latvian.mods.kubejs.typings.Info;
  *         implements IMultiblockProvider {
  *
  *     private final MultiblockHandler multiblock =
- *         MultiblockHandler.builder(this, STRUCTURE::get)
+ *         MultiblockHandler.builder(this, STRUCTURE)
  *             .translationKey("multiblock.building.mymod.my_machine")
  *             .renderOffset(0, -1, 0)
  *             .cacheTicks(20)
