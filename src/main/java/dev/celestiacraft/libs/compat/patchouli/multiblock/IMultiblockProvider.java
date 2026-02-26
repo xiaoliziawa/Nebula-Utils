@@ -52,7 +52,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
  *
  *     @Override
  *     public void setRemoved() {
- *         cleanShowMultiblock();
+ *         cancelShowMultiblock();
  *         super.setRemoved();
  *     }
  * }
@@ -122,7 +122,7 @@ public interface IMultiblockProvider {
 	 * </p>
 	 */
 	@Info("Toggles the multiblock holographic preview\n\n切换多方块全息预览的显示/隐藏")
-	default void cleanShowMultiblock() {
+	default void cancelShowMultiblock() {
 		BlockEntity entity = getBlockEntity();
 
 		if (entity.getLevel() != null && entity.getLevel().isClientSide()) {
