@@ -1,6 +1,7 @@
 package dev.celestiacraft.libs.compat.patchouli.multiblock;
 
 import dev.latvian.mods.kubejs.typings.Info;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * 多方块结构能力提供接口.
@@ -43,6 +44,17 @@ import dev.latvian.mods.kubejs.typings.Info;
  *     public MultiblockHandler getMultiblockHandler() {
  *         return multiblock;
  *     }
+ *
+ *     @Override
+ *     public BlockEntity getBlockEntity() {
+ *         return this;
+ *     }
+ *
+ *     @Override
+ *     public void setRemoved() {
+ *         cleanShowMultiblock();
+ *         super.setRemoved();
+ *     }
  * }
  * }</pre>
  */
@@ -58,6 +70,21 @@ public interface IMultiblockProvider {
 	 */
 	@Info("Gets the MultiblockHandler owned by this BlockEntity\n\n获取当前 BlockEntity 持有的 MultiblockHandler")
 	MultiblockHandler getMultiblockHandler();
+
+	/**
+	 * 获取当前 BlockEntity 实例.
+	 *
+	 * <p>
+	 * 提供对当前 BlockEntity 的直接访问.
+	 * 主要用于在多方块逻辑中需要操作当前 BlockEntity 时.
+	 * </p>
+	 *
+	 * @return 当前 BlockEntity 实例
+	 */
+	@Info("Gets the BlockEntity instance\n\n获取当前 BlockEntity 实例")
+	default BlockEntity getBlockEntity() {
+		return getMultiblockHandler().getBlockEntity();
+	}
 
 	/**
 	 * 切换多方块全息预览的显示/隐藏.
@@ -84,5 +111,22 @@ public interface IMultiblockProvider {
 	@Info("Checks if the multiblock structure is valid\n\n判断多方块结构是否完整")
 	default boolean isStructureValid() {
 		return getMultiblockHandler().isValid();
+	}
+
+	/**
+	 * 清理并切换多方块全息预览的显示/隐藏.
+	 * 切换多方块全息预览的显示/隐藏.
+	 *
+	 * <p>
+	 * 默认委托给 MultiblockHandler.toggleVisualization().
+	 * </p>
+	 */
+	@Info("Toggles the multiblock holographic preview\n\n切换多方块全息预览的显示/隐藏")
+	default void cleanShowMultiblock() {
+		BlockEntity entity = getBlockEntity();
+
+		if (entity.getLevel() != null && entity.getLevel().isClientSide()) {
+			getMultiblockHandler().hideVisualization();
+		}
 	}
 }
