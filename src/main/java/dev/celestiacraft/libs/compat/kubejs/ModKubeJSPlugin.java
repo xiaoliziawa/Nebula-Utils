@@ -7,6 +7,7 @@ import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
+import dev.celestiacraft.libs.client.NebulaLang;
 import dev.celestiacraft.libs.compat.jade.CommonJadeTipProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import dev.celestiacraft.libs.compat.tconstruct.util.SimpleTConUtils;
@@ -48,6 +49,8 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		super.registerBindings(event);
 
 		event.add("NebulaLibs", NebulaLibs.class);
+		event.add("NebulaLang", NebulaLang.class);
+		event.add("NebulaLang$JeiLang", NebulaLang.JeiLang.class);
 		event.add("RegistryInfo", RegistryInfo.class);
 		event.add("LocalDateTime", LocalDateTime.class);
 		event.add("Player", Player.class);
