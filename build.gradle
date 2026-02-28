@@ -115,9 +115,9 @@ dependencies {
     compileOnly fg.deobf("curse.maven:mantle-74924:7414488")
     runtimeOnly fg.deobf("curse.maven:mantle-74924:7414488")
     // IE
-    implementation fg.deobf("curse.maven:immersive-engineering-231951:6206989")
+    compileOnly fg.deobf("curse.maven:immersive-engineering-231951:6206989")
     // Mekanism
-    implementation fg.deobf("mekanism:Mekanism:1.20.1-10.4.15.75")
+    compileOnly fg.deobf("mekanism:Mekanism:1.20.1-10.4.15.75")
     // Create
     compileOnly fg.deobf("curse.maven:create-328085:5838779")
     runtimeOnly fg.deobf("curse.maven:create-328085:5838779")
@@ -219,15 +219,20 @@ tasks.withType(JavaCompile).configureEach {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            artifactId = mod_id
+            from components.java
 
-            groupId = "top.nebula"
-            artifactId = "nebula_libs"
-            version = "1.5.0"
+            artifact(tasks.named("devJar"))
         }
     }
-
     repositories {
+        maven {
+            url = "https://maven.lirxowo.com/releases"
+            credentials {
+                username = findProperty("reposiliteUser")
+                password = findProperty("reposilitePassword")
+            }
+        }
         mavenLocal()
     }
 }

@@ -1,7 +1,5 @@
 package dev.celestiacraft.libs.client.exporter;
 
-import blusunrize.immersiveengineering.api.IEProperties;
-import blusunrize.immersiveengineering.api.client.IModelOffsetProvider;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
@@ -12,6 +10,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import com.mojang.math.Axis;
 import dev.celestiacraft.libs.NebulaLibs;
+import dev.celestiacraft.libs.compat.ICheckModLoaded;
+import dev.celestiacraft.libs.compat.ie.IEModelHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -21,7 +21,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
@@ -300,16 +299,10 @@ public class StructureRenderer {
 				} catch (Exception ignored) {
 				}
 
-				if (modelData == ModelData.EMPTY && blockEntity instanceof IModelOffsetProvider offsetProvider) {
-					try {
-						BlockPos offset = offsetProvider.getModelOffset(state, Vec3i.ZERO);
-
-						if (offset != null) {
-							modelData = ModelData.builder()
-									.with(IEProperties.Model.SUBMODEL_OFFSET, offset)
-									.build();
-						}
-					} catch (Exception ignored) {
+				if (modelData == ModelData.EMPTY && ICheckModLoaded.hasIE()) {
+					ModelData ieData = IEModelHelper.getModelOffset(blockEntity, state);
+					if (ieData != null) {
+						modelData = ieData;
 					}
 				}
 			}

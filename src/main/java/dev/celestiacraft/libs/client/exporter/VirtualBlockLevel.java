@@ -1,9 +1,9 @@
 package dev.celestiacraft.libs.client.exporter;
 
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import dev.celestiacraft.libs.compat.ICheckModLoaded;
+import dev.celestiacraft.libs.compat.mekanism.MekanismTransmitterHelper;
 import lombok.Getter;
-import mekanism.common.content.network.transmitter.Transmitter;
-import mekanism.common.tile.transmitter.TileEntityTransmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -122,37 +122,11 @@ public class VirtualBlockLevel extends WrappedWorld {
 	}
 
 	public void refreshTransmitterConnections() {
-		for (Map.Entry<BlockPos, BlockEntity> entry : blockEntities.entrySet()) {
-			BlockEntity blockEntity = entry.getValue();
-
-			if (!(blockEntity instanceof TileEntityTransmitter transmitterTile)) {
-				continue;
-			}
-
-			Transmitter<?, ?, ?> transmitter = transmitterTile.getTransmitter();
-
-			byte connections = 0x00;
-
-			for (Direction side : Direction.values()) {
-
-				BlockPos neighborPos = entry.getKey().relative(side);
-
-				BlockEntity neighborBlockEntity = blockEntities.get(neighborPos);
-
-				if (neighborBlockEntity instanceof TileEntityTransmitter neighborTile) {
-					if (transmitter.supportsTransmissionType(neighborTile)
-							&& transmitter.canConnect(side)
-							&& neighborTile
-							.getTransmitter()
-							.canConnect(side.getOpposite())) {
-
-						connections |= (byte) (1 << side.ordinal());
-					}
-				}
-			}
-
-			transmitter.currentTransmitterConnections = connections;
+		if (!ICheckModLoaded.hasMekanism()) {
+			return;
 		}
+
+		MekanismTransmitterHelper.refreshConnections(blockEntities);
 	}
 
 	public void updateNeighborStates() {
