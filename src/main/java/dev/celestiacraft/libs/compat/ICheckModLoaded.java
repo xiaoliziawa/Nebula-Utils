@@ -100,4 +100,18 @@ public interface ICheckModLoaded {
 	static boolean hasPatchouli() {
 		return hasMod("patchouli");
 	}
+
+	/**
+	 * @return 是否已加载 Immersive Engineering 模组
+	 */
+	static boolean hasIE() {
+		return hasMod("immersiveengineering");
+	}
+
+	/**
+	 * @return 是否已加载 Mekanism 模组
+	 */
+	static boolean hasMekanism() {
+		return hasMod("mekanism");
+	}
 }
