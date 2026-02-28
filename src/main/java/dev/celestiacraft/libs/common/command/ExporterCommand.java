@@ -27,7 +27,7 @@ public class ExporterCommand {
 				.then(Commands.literal("export")
 						.executes((context) -> {
 							minecraft.tell(() -> {
-								Minecraft.getInstance().setScreen(new StructureExportScreen());
+								minecraft.setScreen(new StructureExportScreen());
 							});
 							return 1;
 						})
