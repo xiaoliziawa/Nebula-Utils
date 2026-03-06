@@ -1,5 +1,6 @@
 package dev.celestiacraft.libs.tags;
 
+import dev.celestiacraft.libs.NebulaLibs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 
@@ -132,6 +133,10 @@ public abstract class AbstractTagBuilder<T> {
 
 	public TagKey<T> forge() {
 		return namespace("forge");
+	}
+
+	public TagKey<T> nebulaLibs() {
+		return namespace(NebulaLibs.MODID);
 	}
 
 	public TagKey<T> cmi() {
