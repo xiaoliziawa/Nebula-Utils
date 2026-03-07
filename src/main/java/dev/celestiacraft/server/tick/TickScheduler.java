@@ -56,7 +56,7 @@ import java.util.function.Consumer;
  * });
  *
  * // 2 秒后执行服务器任务
- * TickScheduler.scheduleServer(server, 40, s -> {
+ * TickScheduler.scheduleServer(server, 40, (s) -> {
  *     s.getPlayerList().broadcastSystemMessage(
  *         Component.literal("Delayed message"),
  *         false
@@ -64,7 +64,7 @@ import java.util.function.Consumer;
  * });
  *
  * // 3 秒后执行玩家任务
- * TickScheduler.schedulePlayer(player, 60, p -> {
+ * TickScheduler.schedulePlayer(player, 60, (p) -> {
  *     p.sendSystemMessage(Component.literal("Delayed player message"));
  * });
  * }</pre>
