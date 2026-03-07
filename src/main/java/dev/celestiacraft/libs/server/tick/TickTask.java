@@ -1,6 +1,6 @@
-package dev.celestiacraft.server.tick;
+package dev.celestiacraft.libs.server.tick;
 
-public class TickTask {
+public abstract class TickTask {
 	int ticks;
 
 	public TickTask(int ticks) {

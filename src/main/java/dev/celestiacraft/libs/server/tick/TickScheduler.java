@@ -1,5 +1,6 @@
-package dev.celestiacraft.server.tick;
+package dev.celestiacraft.libs.server.tick;
 
+import dev.celestiacraft.libs.NebulaLibs;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
@@ -79,7 +80,7 @@ import java.util.function.Consumer;
  *   <li>Tick 倒计时每 Tick 减 1</li>
  * </ul>
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = NebulaLibs.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TickScheduler {
 	/**
 	 * 当前等待执行的 Tick 任务列表。

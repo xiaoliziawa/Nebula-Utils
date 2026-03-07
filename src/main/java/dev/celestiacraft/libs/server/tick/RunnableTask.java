@@ -1,4 +1,4 @@
-package dev.celestiacraft.server.tick;
+package dev.celestiacraft.libs.server.tick;
 
 public class RunnableTask extends TickTask {
 	Runnable task;
