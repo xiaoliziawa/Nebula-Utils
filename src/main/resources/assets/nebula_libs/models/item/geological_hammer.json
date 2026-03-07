@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "nebula_libs:item/geological_hammer"
+	}
+}

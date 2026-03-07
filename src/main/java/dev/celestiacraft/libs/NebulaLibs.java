@@ -1,10 +1,13 @@
 package dev.celestiacraft.libs;
 
+import dev.celestiacraft.libs.common.register.NebulaItem;
+import dev.celestiacraft.libs.debug.DebugUserManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -24,7 +27,12 @@ public class NebulaLibs {
 	public static final Logger LOGGER = LogManager.getLogger("Nebula");
 
 	public NebulaLibs(FMLJavaModLoadingContext context) {
+		IEventBus bus = context.getModEventBus();
+
+		NebulaItem.register(bus);
+
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/libs/common.toml");
+		DebugUserManager.load();
 	}
 
 	/**
