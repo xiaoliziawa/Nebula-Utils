@@ -16,7 +16,8 @@ public class PlayerTask extends TickTask {
 
 	@Override
 	void run() {
-		if (player != null && player.isAlive())
+		if (player != null && player.isAlive()) {
 			task.accept(player);
+		}
 	}
 }
