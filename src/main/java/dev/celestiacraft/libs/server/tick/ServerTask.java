@@ -16,7 +16,8 @@ public class ServerTask extends TickTask {
 
 	@Override
 	void run() {
-		if (server != null)
+		if (server != null) {
 			task.accept(server);
+		}
 	}
 }
