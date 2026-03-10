@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * 共享的内联物品标记解析工具类.
@@ -148,9 +147,9 @@ public final class InlineItemPatternParser {
 		TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.parse(tagId));
 		ITagManager<Item> tagManager = ForgeRegistries.ITEMS.tags();
 		if (tagManager == null) return List.of();
-		return tagManager.getTag(tagKey)
-				.stream()
-				.collect(Collectors.toList());
+		List<Item> result = new ArrayList<>();
+		tagManager.getTag(tagKey).forEach(result::add);
+		return result;
 	}
 
 	/**
