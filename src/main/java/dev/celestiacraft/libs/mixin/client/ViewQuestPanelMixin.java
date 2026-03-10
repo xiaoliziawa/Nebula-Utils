@@ -39,7 +39,7 @@ public class ViewQuestPanelMixin {
 			try {
 				Component rawText = ((TextFieldAccessor) tf).nebula$getRawText();
 				text = rawText != null ? rawText.getString() : "";
-			} catch (Throwable e) {
+			} catch (Exception e) {
 				continue;
 			}
 
