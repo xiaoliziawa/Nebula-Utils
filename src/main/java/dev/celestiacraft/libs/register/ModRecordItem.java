@@ -1,7 +1,7 @@
-package dev.celestiacraft.libs.common.register;
+package dev.celestiacraft.libs.register;
 
-import net.minecraft.world.item.RecordItem;
 import dev.celestiacraft.libs.sounds.RecordSpec;
+import net.minecraft.world.item.RecordItem;
 
 /**
  * 自定义唱片物品实现.
