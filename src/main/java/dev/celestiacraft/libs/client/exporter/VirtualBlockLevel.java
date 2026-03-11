@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +100,9 @@ public class VirtualBlockLevel extends WrappedWorld {
 	}
 
 	public void initEntities(List<StructureScene.EntityInfo> infos) {
-		for (StructureScene.EntityInfo info : infos) {
+		List<StructureScene.EntityInfo> filtered = filterMultipartGhosts(infos);
+
+		for (StructureScene.EntityInfo info : filtered) {
 			try {
 				Entity entity = EntityType.loadEntityRecursive(
 						info.nbt(),
@@ -129,6 +132,38 @@ public class VirtualBlockLevel extends WrappedWorld {
 			} catch (Exception ignored) {
 			}
 		}
+	}
+
+	/**
+	 * 过滤来自 MultipartEntity 子部件的幽灵实体。
+	 */
+	private static List<StructureScene.EntityInfo> filterMultipartGhosts(List<StructureScene.EntityInfo> infos) {
+		Map<String, List<StructureScene.EntityInfo>> byType = new LinkedHashMap<>();
+		for (StructureScene.EntityInfo info : infos) {
+			String typeId = info.nbt().getString("id");
+			byType.computeIfAbsent(typeId, k -> new ArrayList<>()).add(info);
+		}
+
+		List<StructureScene.EntityInfo> result = new ArrayList<>();
+		for (List<StructureScene.EntityInfo> group : byType.values()) {
+			if (group.size() <= 1) {
+				result.addAll(group);
+				continue;
+			}
+
+			int maxNbtSize = 0;
+			for (StructureScene.EntityInfo info : group) {
+				maxNbtSize = Math.max(maxNbtSize, info.nbt().size());
+			}
+
+			for (StructureScene.EntityInfo info : group) {
+				if (maxNbtSize - info.nbt().size() <= 2) {
+					result.add(info);
+				}
+			}
+		}
+
+		return result;
 	}
 
 	public void refreshTransmitterConnections() {
