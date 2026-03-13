@@ -8,6 +8,55 @@ import top.theillusivec4.curios.api.CuriosApi;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Curios 饰品功能接口
+ *
+ * <p>
+ * 实现该接口的物品在被玩家佩戴到
+ * {@code Curios} 饰品槽位时,
+ * 会按照指定的 Tick 间隔周期性执行逻辑.
+ * </p>
+ *
+ * <p>
+ * 接口主要用于为普通 {@link Item}
+ * 提供简单的 Curios 行为扩展,
+ * 例如:
+ * </p>
+ *
+ * <ul>
+ *     <li>周期性给予玩家效果</li>
+ *     <li>持续检测玩家状态</li>
+ *     <li>执行被动能力</li>
+ * </ul>
+ *
+ * <p>
+ * 一般情况下只需要实现
+ * {@link #curiosTick(CuriosContext)} 方法即可.
+ * </p>
+ *
+ * <p>
+ * Tick 调用仅在服务端执行,
+ * 因此通常不需要额外判断
+ * {@code level.isClientSide()}.
+ * </p>
+ *
+ * <pre>{@code
+ * public class CobaltItem extends Item implements ICuriosHelper {
+ *     @Override
+ *     public void curiosTick(CuriosContext context) {
+ *         context.player.addEffect(new MobEffectInstance(
+ *             MobEffects.MOVEMENT_SPEED,
+ *             40,
+ *             1,
+ *             false,
+ *             false
+ *         ));
+ *     }
+ * }
+ * }</pre>
+ *
+ * @see CuriosContext
+ */
 public interface ICuriosHelper {
 	/**
 	 * 检查指定实体的 Curios 槽位中是否存在某个指定的物品,
