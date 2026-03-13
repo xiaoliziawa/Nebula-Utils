@@ -8,45 +8,6 @@ import top.theillusivec4.curios.api.CuriosApi;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Curios Tick 接口
- *
- * <p>
- * 实现该接口的物品在被玩家作为 Curios 饰品佩戴时,
- * 会按照指定的 Tick 间隔周期性调用对应的方法
- * </p>
- *
- * <p>
- * 一般情况下只需要实现
- * {@link #curiosTick(CuriosContext)} 即可
- * </p>
- *
- * <p>
- * 如果需要访问当前饰品的 {@link ItemStack},
- * 可以实现 {@link #curiosTick(CuriosContext)}
- * </p>
- *
- * <p>
- * Tick 调用仅在服务端执行,
- * 因此通常不需要额外判断
- * {@code level.isClientSide()}
- * </p>
- *
- * <pre>{@code
- * public class CobaltItem extends Item implements CuriosUtils {
- *     @Override
- *     public void curiosTick(CuriosContext context) {
- *         context.player.addEffect(new MobEffectInstance(
- *             MobEffects.MOVEMENT_SPEED,
- *             40,
- *             1,
- *             false,
- *             false
- *         ));
- *     }
- * }
- * }</pre>
- */
 public interface CuriosUtils {
 	/**
 	 * 检查指定实体的 Curios 槽位中是否存在某个指定的物品,
@@ -102,14 +63,43 @@ public interface CuriosUtils {
 	}
 
 	/**
-	 * 处理 Curios Tick 事件
+	 * Curios Tick 接口
 	 *
 	 * <p>
-	 * 该方法会在物品被玩家作为 Curios 饰品佩戴时,
-	 * 按照指定的 Tick 间隔周期性调用
+	 * 实现该接口的物品在被玩家作为 Curios 饰品佩戴时,
+	 * 会按照指定的 Tick 间隔周期性调用对应的方法
 	 * </p>
 	 *
-	 * @param context 包含玩家和物品栈的上下文
+	 * <p>
+	 * 一般情况下只需要实现
+	 * {@link #curiosTick(CuriosContext)} 即可
+	 * </p>
+	 *
+	 * <p>
+	 * 如果需要访问当前饰品的 {@link ItemStack},
+	 * 可以实现 {@link #curiosTick(CuriosContext)}
+	 * </p>
+	 *
+	 * <p>
+	 * Tick 调用仅在服务端执行,
+	 * 因此通常不需要额外判断
+	 * {@code level.isClientSide()}
+	 * </p>
+	 *
+	 * <pre>{@code
+	 * public class CobaltItem extends Item implements CuriosUtils {
+	 *     @Override
+	 *     public void curiosTick(CuriosContext context) {
+	 *         context.player.addEffect(new MobEffectInstance(
+	 *             MobEffects.MOVEMENT_SPEED,
+	 *             40,
+	 *             1,
+	 *             false,
+	 *             false
+	 *         ));
+	 *     }
+	 * }
+	 * }</pre>
 	 */
 	void curiosTick(CuriosContext context);
 
@@ -130,7 +120,7 @@ public interface CuriosUtils {
 	 * @Override
 	 * public int tickCheck() {
 	 *     // 每两秒触发一次
-	 *     return 40;
+	 *     return 20 * 2;
 	 * }
 	 * }</pre>
 	 *
