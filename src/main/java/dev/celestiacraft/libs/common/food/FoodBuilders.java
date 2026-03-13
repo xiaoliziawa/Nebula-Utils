@@ -116,23 +116,25 @@ public class FoodBuilders implements Supplier<FoodProperties> {
 		return builder;
 	}
 
-	public FoodBuilders hunger(int hunger) {
+	public FoodBuilders nutrition(int hunger) {
 		builder.nutrition(hunger);
 		return this;
 	}
 
-	public FoodBuilders saturation(float saturation) {
+	public FoodBuilders saturationMod(float saturation) {
 		builder.saturationMod(saturation);
 		return this;
 	}
 
-	public FoodBuilders alwaysEdible() {
+	public FoodBuilders alwaysEat() {
 		builder.alwaysEat();
 		return this;
 	}
 
-	public FoodBuilders alwaysEdible(boolean flag) {
-		if (flag) builder.alwaysEat();
+	public FoodBuilders alwaysEat(boolean flag) {
+		if (flag) {
+			builder.alwaysEat();
+		}
 		return this;
 	}
 
@@ -148,7 +150,7 @@ public class FoodBuilders implements Supplier<FoodProperties> {
 		return this;
 	}
 
-	public FoodBuilders fastToEat() {
+	public FoodBuilders fast() {
 		builder.fast();
 		return this;
 	}
