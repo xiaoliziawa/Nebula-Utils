@@ -32,31 +32,32 @@ public class NebulaLibs {
 	public static final String MODID = "nebula_libs";
 	public static final String NAME = "Nebula Libs";
 	public static final Logger LOGGER = LogManager.getLogger("Nebula");
-	public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
-			.setTooltipModifierFactory((item) -> {
-				return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-						.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
-			});
+	public final CreateRegistrate registrate;
+	public static NebulaLibs INSTANCE;
 
 	public NebulaLibs(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
+		INSTANCE = this;
 
-		REGISTRATE.registerEventListeners(bus);
+		this.registrate = CreateRegistrate.create(MODID)
+				.setTooltipModifierFactory((item) -> {
+					return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
+							.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
+				});
 
+		registrate.registerEventListeners(bus);
 		NebulaItem.register(bus);
 
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/libs/common.toml");
 		DebugUserManager.load();
 	}
 
-	/**
-	 * 加载ResourceLocation资源
-	 *
-	 * @param path
-	 * @return
-	 */
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
+	}
+
+	public static ResourceLocation loadForgeResource(String path) {
+		return ResourceLocation.fromNamespaceAndPath("forge", path);
 	}
 
 	/**

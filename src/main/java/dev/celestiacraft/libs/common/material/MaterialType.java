@@ -11,6 +11,7 @@ public enum MaterialType {
 	WIRE,
 
 	BLOCK,
+	RAW_BLOCK,
 	MOLTEN,
 
 	DIRTY,

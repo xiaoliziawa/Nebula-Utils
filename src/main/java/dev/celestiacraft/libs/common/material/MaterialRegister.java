@@ -1,9 +1,16 @@
 package dev.celestiacraft.libs.common.material;
 
-public class MaterialRegister {
-	static RegisterManager manager = new RegisterManager();
+import dev.celestiacraft.libs.NebulaLibs;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-	public static void register() {
+@Mod.EventBusSubscriber(modid = NebulaLibs.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class MaterialRegister {
+	@SubscribeEvent
+	public static void onCommonSetup(FMLCommonSetupEvent event) {
+		RegisterManager manager = new RegisterManager(NebulaLibs.INSTANCE.registrate);
+
 		for (Material material : Material.MATERIALS) {
 			for (MaterialType type : material.types) {
 				switch (type) {
@@ -15,6 +22,11 @@ public class MaterialRegister {
 					case GEAR -> manager.gear(material);
 					case WIRE -> manager.wire(material);
 					case PRISM -> manager.prism(material);
+
+					case BLOCK -> manager.metalBlock(material);
+					case RAW_BLOCK -> manager.rawBlock(material);
+
+					case MOLTEN -> manager.moltenFluid(material);
 
 					/*
 					 * case CLUMP -> manager.clump(material);

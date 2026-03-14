@@ -1,7 +1,14 @@
 package dev.celestiacraft.libs.common.material;
 
+import com.simibubi.create.foundation.data.CreateRegistrate;
+
 public class RegisterManager {
-	static MaterialRegistrar registrar = new MaterialRegistrar();
+	private final MaterialRegistrar registrar;
+
+	// 构造函数接收外部传入的 CreateRegistrate
+	public RegisterManager(CreateRegistrate registrate) {
+		this.registrar = new MaterialRegistrar(registrate);
+	}
 
 	protected void ingot(Material material) {
 		registrar.createItem("ingot", material)
@@ -65,6 +72,21 @@ public class RegisterManager {
 
 	protected void slurry(Material material) {
 		registrar.createItem("slurry", material)
+				.register();
+	}
+
+	protected void metalBlock(Material material) {
+		registrar.createMetalBlock(material)
+				.register();
+	}
+
+	protected void rawBlock(Material material) {
+		registrar.createRawBlock(material)
+				.register();
+	}
+
+	protected void moltenFluid(Material material) {
+		registrar.createMoltenFluid(material)
 				.register();
 	}
 }

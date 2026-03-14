@@ -1,5 +1,7 @@
 package dev.celestiacraft.libs.common.material;
 
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 
 import java.util.ArrayList;
@@ -9,8 +11,12 @@ public class Material {
 	public static final List<Material> MATERIALS = new ArrayList<>();
 	public final List<MaterialType> types = new ArrayList<>();
 
-	public final String name;
-	public final String level;
+	// 新增 namespace
+	public final String namespace;
+	// 材料名
+	public String name;
+	// 挖掘等级
+	public TagKey<Block> level;
 
 	public int hardness = 5;
 	public int resistance = 5;
@@ -20,12 +26,25 @@ public class Material {
 
 	public boolean metal = false;
 
-	public Material(String name, String level) {
+	/**
+	 * 传入 namespace
+	 *
+	 * @param namespace 注册的Material的namespace
+	 */
+	public Material(String namespace) {
+		this.namespace = namespace;
+		// 具体材料名在 material() 里设置
+		this.name = null;
+		this.level = null;
+		this.sound = SoundType.METAL;
+	}
+
+	// 设置具体材料信息
+	public Material material(String name, TagKey<Block> level) {
 		this.name = name;
 		this.level = level;
-		this.sound = SoundType.METAL;
-
 		MATERIALS.add(this);
+		return this;
 	}
 
 	public Material hardness(int hardness) {
@@ -121,8 +140,12 @@ public class Material {
 		return type(MaterialType.DIRTY_SLURRY);
 	}
 
-	public Material block() {
+	public Material metalBlock() {
 		return type(MaterialType.BLOCK);
+	}
+
+	public Material rawBlock() {
+		return type(MaterialType.RAW_BLOCK);
 	}
 
 	public Material molten() {
