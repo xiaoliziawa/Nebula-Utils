@@ -22,4 +22,7 @@ public class TestMaterial {
 			.metalBlock()
 			.rawBlock()
 			.molten();
+
+	public static void init() {
+	}
 }

@@ -50,8 +50,7 @@ public class NebulaLibs {
 
 		registrate.registerEventListeners(bus);
 
-//		TestMaterial.init();
-		Material.initAll(registrate);
+		TestMaterial.init();
 		MaterialRegister.register(registrate);
 
 		NebulaItem.register(bus);
