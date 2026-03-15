@@ -1,24 +1,33 @@
 package dev.celestiacraft.libs.common.material;
 
+import lombok.Getter;
+
+@Getter
 public enum MaterialType {
-	INGOT,
-	PLATE,
-	NUGGET,
-	DUST,
-	ROD,
-	GEAR,
-	PRISM,
-	WIRE,
-	RAW_ORE,
+	INGOT("ingot"),
+	PLATE("plate"),
+	NUGGET("nugget"),
+	DUST("dust"),
+	ROD("rod"),
+	GEAR("gear"),
+	PRISM("prism"),
+	WIRE("wire"),
+	RAW_ORE("raw_ore"),
 
-	BLOCK,
-	RAW_BLOCK,
-	MOLTEN,
+	BLOCK("block"),
+	RAW_BLOCK("raw_block"),
+	MOLTEN("molten"),
 
-	DIRTY,
-	CLUMP,
-	SHARD,
-	CRYSTAL,
-	SLURRY,
-	DIRTY_SLURRY
+	DIRTY("dirty"),
+	CLUMP("clump"),
+	SHARD("shard"),
+	CRYSTAL("crystal"),
+	SLURRY("slurry"),
+	DIRTY_SLURRY("dirty_slurry");
+
+	public final String id;
+
+	MaterialType(String id) {
+		this.id = id;
+	}
 }

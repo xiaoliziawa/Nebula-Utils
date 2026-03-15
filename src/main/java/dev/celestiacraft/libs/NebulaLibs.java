@@ -5,10 +5,8 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import dev.celestiacraft.libs.common.material.Material;
 import dev.celestiacraft.libs.common.material.MaterialRegister;
 import dev.celestiacraft.libs.common.register.NebulaItem;
-import dev.celestiacraft.libs.common.register.TestMaterial;
 import dev.celestiacraft.libs.compat.ftbquests.client.FTBQuestsClientCompat;
 import dev.celestiacraft.libs.debug.DebugUserManager;
 import net.minecraft.client.Minecraft;
@@ -50,7 +48,6 @@ public class NebulaLibs {
 
 		registrate.registerEventListeners(bus);
 
-		TestMaterial.init();
 		MaterialRegister.register(registrate);
 
 		NebulaItem.register(bus);

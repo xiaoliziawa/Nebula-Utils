@@ -1,9 +1,12 @@
 package dev.celestiacraft.libs.common.material;
 
-import com.simibubi.create.foundation.data.CreateRegistrate;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,5 +188,33 @@ public class Material {
 
 	public Material molten() {
 		return type(MaterialType.MOLTEN);
+	}
+
+	private ResourceLocation getId(String path) {
+		return ResourceLocation.fromNamespaceAndPath(namespace, path);
+	}
+
+	public Item getItem(MaterialType type) {
+		return ForgeRegistries.ITEMS.getValue(getId(String.format("%s_%s", name, type.getId())));
+	}
+
+	private Block getBlock(MaterialType type) {
+		return ForgeRegistries.BLOCKS.getValue(getId(String.format("%s_%s", name, type.getId())));
+	}
+
+	public Block getMetalBlock() {
+		return getBlock(MaterialType.BLOCK);
+	}
+
+	public Block getRawBlock() {
+		return getBlock(MaterialType.RAW_BLOCK);
+	}
+
+	public Fluid getMolten() {
+		return ForgeRegistries.FLUIDS.getValue(getId(String.format("molten_%s", name)));
+	}
+
+	public Fluid getFluid() {
+		return getMolten();
 	}
 }
