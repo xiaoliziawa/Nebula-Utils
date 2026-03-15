@@ -50,7 +50,7 @@ public class NebulaLibs {
 							.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 				});
 
-		TestMaterial.init();
+//		TestMaterial.init();
 		registrate.registerEventListeners(bus);
 
 		MaterialRegister.register(registrate);
