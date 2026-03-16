@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import dev.celestiacraft.libs.NebulaLibs;
 import dev.celestiacraft.libs.compat.ICheckModLoaded;
@@ -43,13 +44,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import java.time.LocalDateTime;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
-	public void registerEvents() {
-		super.registerEvents();
-	}
-
 	public void registerBindings(BindingsEvent event) {
-		super.registerBindings(event);
-
 		event.add("NebulaLibs", NebulaLibs.class);
 		event.add("NebulaLang", NebulaLang.class);
 		event.add("NebulaLang$JeiLang", NebulaLang.JeiLang.class);
@@ -81,6 +76,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("GsonBuilder", GsonBuilder.class);
 		event.add("GsonBuildConfig", GsonBuildConfig.class);
 		event.add("NebulaMaterial", Material.class);
+		event.add("Lazy", Lazy.class);
 
 		if (ICheckModLoaded.hasCreate()) {
 			event.add("AllSoundEvents", AllSoundEvents.class);
@@ -111,6 +107,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 			event.add("MultiblockHandler", MultiblockHandler.class);
 			event.add("MultiblockHandler$Builder", MultiblockHandler.Builder.class);
 			event.add("IMultiblockProvider", IMultiblockProvider.class);
+			event.add("BlockEntityContext", BlockEntityContext.class);
+			event.add("MultiblockContext", MultiblockContext.class);
+			event.add("WorldContext", WorldContext.class);
 		}
 	}
 }
