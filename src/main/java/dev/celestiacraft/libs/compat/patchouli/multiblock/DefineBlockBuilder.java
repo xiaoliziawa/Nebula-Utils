@@ -16,7 +16,7 @@ import java.util.function.Consumer;
  * 用于定义 Patchouli 多方块结构中某个字符位置的匹配规则Examples
  *
  * <p>
- * 在 {@link MultiblockStructureBuilder#define(char, Consumer)} 中使用，
+ * 在 {@link StructureBuilder#define(char, Consumer)} 中使用，
  * 每一个结构字符都可以通过该构建器定义其对应的方块匹配逻辑.
  * </p>
  *
@@ -58,7 +58,7 @@ public class DefineBlockBuilder {
 	 * @param block 具体方块
 	 */
 	@Info("Specify a block\n\n指定具体方块")
-	public void block(Block block) {
+	public void toBlock(Block block) {
 		matchers.add(pos);
 		matchers.add(block);
 	}
@@ -93,14 +93,6 @@ public class DefineBlockBuilder {
 	}
 
 	/**
-	 * 支持任意方块
-	 */
-	@Info("Allows the use of any block, generally used for empty spaces\n\n支持任意方块, 一般用于空位")
-	public void anyBlock() {
-		any();
-	}
-
-	/**
 	 * 指定方块 + Predicate<BlockState>
 	 */
 	@Info("Specifies a block + Predicate<BlockState>\n\n指定方块 + Predicate<BlockState>")
@@ -113,9 +105,9 @@ public class DefineBlockBuilder {
 	 * 指定方块 + 状态映射 (Map<Property, Comparable>)
 	 */
 	@Info("Specifies a block + state mapping (Map<Property, Comparable>)\n\n指定方块 + 状态映射 (Map<Property, Comparable>)")
-	public void stateMap(Block block, Map<Property<?>, ? extends Comparable<?>> stateMap) {
+	public void map(Block block, Map<Property<?>, ? extends Comparable<?>> map) {
 		BlockState state = block.defaultBlockState();
-		for (Map.Entry<Property<?>, ? extends Comparable<?>> entry : stateMap.entrySet()) {
+		for (Map.Entry<Property<?>, ? extends Comparable<?>> entry : map.entrySet()) {
 			state = state.setValue((Property) entry.getKey(), (Comparable) entry.getValue());
 		}
 		matchers.add(pos);

@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * Patchouli 多方块结构的构建器.
  *
  * <p>
- * 该类用于以声明式方式构建 {@link vazkii.patchouli.api.IMultiblock}，
+ * 该类用于以声明式方式构建 {@link vazkii.patchouli.api.IMultiblock}, 
  * 封装 Patchouli 原生 makeMultiblock 的参数组织流程.
  * </p>
  *
@@ -26,24 +26,36 @@ import java.util.function.Consumer;
  * <h2>典型使用方式</h2>
  *
  * <pre>{@code
- * IMultiblock multiblock = new MultiblockStructureBuilder(structure)
+ * IMultiblock multiblock = new StructureBuilder(structure)
+ *     .define('0', (builder) -> {
+ *         builder.block(Blocks.IRON_BLOCK)
+ *     })
+ *     .define('A', (builder) -> {
+ *         builder.any()
+ *     })
+ *     .build();
+ * }</pre>
+ *
+ * <h2>或</h2>
+ * <pre>{@code
+ * IMultiblock multiblock = StructureBuilder.create(structure)
  *     .define('0', (builder) -> builder.block(Blocks.IRON_BLOCK))
  *     .define('A', (builder) -> builder.any())
  *     .build();
  * }</pre>
  *
  * <p>
- * 内部通过收集所有字符匹配规则，
+ * 内部通过收集所有字符匹配规则, 
  * 最终调用 {@link PatchouliAPI.IPatchouliAPI#makeMultiblock}
  * 生成 IMultiblock 实例.
  * </p>
  *
  * <p>
- * 该类本质上是一个 DSL 封装层，
- * 使多方块结构定义更加清晰、集中且可维护.
+ * 该类本质上是一个 DSL 封装层, 
+ * 使多方块结构定义更加清晰, 集中且可维护.
  * </p>
  */
-public class MultiblockStructureBuilder {
+public class StructureBuilder {
 	private final String[][] structure;
 	private final List<Object> matchers = new ArrayList<>();
 
@@ -52,7 +64,7 @@ public class MultiblockStructureBuilder {
 	 *
 	 * @param structure 多维字符数组表示结构
 	 */
-	public MultiblockStructureBuilder(String[][] structure) {
+	public StructureBuilder(String[][] structure) {
 		this.structure = structure;
 	}
 
@@ -62,8 +74,8 @@ public class MultiblockStructureBuilder {
 	 * @param structure 多维字符数组表示结构
 	 */
 	@Info("When defining a structure, there must be a \"0\" position as the center position of the entire structure\n\n定义结构时必须有一个\"0\"的位置作为整个结构的中心位置")
-	public static MultiblockStructureBuilder create(String[][] structure) {
-		return new MultiblockStructureBuilder(structure);
+	public static StructureBuilder create(String[][] structure) {
+		return new StructureBuilder(structure);
 	}
 
 	/**
@@ -74,7 +86,7 @@ public class MultiblockStructureBuilder {
 	 * @return 构建器自身
 	 */
 	@Info("Defines the matching rule for a specific position in the structure\n\n定义结构中某个位置的匹配规则")
-	public MultiblockStructureBuilder define(char pos, Consumer<DefineBlockBuilder> handler) {
+	public StructureBuilder define(char pos, Consumer<DefineBlockBuilder> handler) {
 		handler.accept(new DefineBlockBuilder(pos, matchers));
 		return this;
 	}
