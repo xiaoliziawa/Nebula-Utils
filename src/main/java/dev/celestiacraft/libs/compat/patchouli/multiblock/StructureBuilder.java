@@ -12,7 +12,18 @@ import java.util.function.Consumer;
  * Patchouli 多方块结构的构建器.
  *
  * <p>
- * 该类用于以声明式方式构建 {@link vazkii.patchouli.api.IMultiblock}, 
+ * Patchouli 方向展示
+ * <pre>{@code
+ *     E
+ *
+ * N       S
+ *
+ *     W
+ * }</pre>
+ * </p>
+ *
+ * <p>
+ * 该类用于以声明式方式构建 {@link IMultiblock},
  * 封装 Patchouli 原生 makeMultiblock 的参数组织流程.
  * </p>
  *
@@ -45,13 +56,13 @@ import java.util.function.Consumer;
  * }</pre>
  *
  * <p>
- * 内部通过收集所有字符匹配规则, 
+ * 内部通过收集所有字符匹配规则,
  * 最终调用 {@link PatchouliAPI.IPatchouliAPI#makeMultiblock}
  * 生成 IMultiblock 实例.
  * </p>
  *
  * <p>
- * 该类本质上是一个 DSL 封装层, 
+ * 该类本质上是一个 DSL 封装层,
  * 使多方块结构定义更加清晰, 集中且可维护.
  * </p>
  */
