@@ -234,7 +234,8 @@ public class MultiblockHandler {
 	public void showVisualization() {
 		Level level = getLevel();
 		BlockState state = level.getBlockState(getBlockPos());
-		Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+		// FACING NOT HORIZONTAL_FACING!!!
+		Direction direction = state.getValue(BlockStateProperties.FACING);
 
 		if (!level.isClientSide()) {
 			return;
