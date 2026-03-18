@@ -241,10 +241,10 @@ public class MultiblockHandler {
 		}
 
 		Rotation rotation = switch (direction.getOpposite()) {
-			case SOUTH -> Rotation.CLOCKWISE_90;
-			case WEST -> Rotation.CLOCKWISE_180;
-			case EAST -> Rotation.NONE;
-			default -> Rotation.COUNTERCLOCKWISE_90;
+			case SOUTH -> Rotation.NONE;
+			case WEST -> Rotation.CLOCKWISE_90;
+			case EAST -> Rotation.COUNTERCLOCKWISE_90;
+			default -> Rotation.CLOCKWISE_180;
 		};
 
 		PatchouliAPI.get().showMultiblock(
