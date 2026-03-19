@@ -80,7 +80,7 @@ public class DefineBlockBuilder {
 	@Info("Specify a block tag\n\n指定方块标签")
 	public void tag(TagKey<Block> tag) {
 		matchers.add(pos);
-		matchers.add(tag);
+		matchers.add(PatchouliAPI.get().tagMatcher(tag));
 	}
 
 	/**
