@@ -39,6 +39,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nullable;
@@ -47,6 +48,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class StructureRenderer implements AutoCloseable {
@@ -86,6 +88,8 @@ public class StructureRenderer implements AutoCloseable {
 	private final VirtualBlockLevel virtualLevel;
 
 	private final Map<RenderType, VertexBuffer> blockVBOs = new HashMap<>();
+	@Nullable
+	private VertexBuffer translucentBlockVBO;
 	@Nullable
 	private VertexBuffer fluidVBO;
 	private boolean vbosBuilt;
@@ -238,8 +242,10 @@ public class StructureRenderer implements AutoCloseable {
 		if (!vbosBuilt) {
 			buildVBOs(dispatcher);
 		}
+		buildTranslucentBlockVBO(dispatcher);
 
 		drawBlockVBOs();
+		drawTranslucentBlockVBO();
 
 		renderBlockEntities(mc, source);
 		source.endBatch();
@@ -258,26 +264,22 @@ public class StructureRenderer implements AutoCloseable {
 		PoseStack poseStack = new PoseStack();
 		RandomSource random = RandomSource.create();
 		ModelBlockRenderer modelRenderer = dispatcher.getModelRenderer();
-
 		ModelBlockRenderer.enableCaching();
 
 		Map<RenderType, BufferBuilder> builders = new HashMap<>();
 		for (RenderType renderType : RenderType.chunkBufferLayers()) {
+			if (renderType == RenderType.translucent()) {
+				continue;
+			}
 			BufferBuilder builder = new BufferBuilder(256 * 1024);
 			builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
 			builders.put(renderType, builder);
 		}
 
-		for (Map.Entry<BlockPos, BlockState> entry : scene.getBlocks().entrySet()) {
-			BlockPos pos = entry.getKey();
-			BlockState state = entry.getValue();
-
-			if (state.getRenderShape() != RenderShape.MODEL) {
-				continue;
-			}
-
+		forEachModelBlock((pos, state) -> {
 			ModelData modelData = getModelData(pos, state, dispatcher);
-			BakedModel model = dispatcher.getBlockModel(state);
+			BakedModel model = new ExporterCulledBakedModel(dispatcher.getBlockModel(state), virtualLevel, pos, state);
+			random.setSeed(state.getSeed(pos));
 
 			for (RenderType renderType : model.getRenderTypes(state, random, modelData)) {
 				BufferBuilder builder = builders.get(renderType);
@@ -290,13 +292,13 @@ public class StructureRenderer implements AutoCloseable {
 
 				modelRenderer.tesselateBlock(
 						virtualLevel, model, state, pos, poseStack, builder,
-						false, random, state.getSeed(pos),
+						true, random, state.getSeed(pos),
 						OverlayTexture.NO_OVERLAY, modelData, renderType
 				);
 
 				poseStack.popPose();
 			}
-		}
+		});
 
 		for (Map.Entry<RenderType, BufferBuilder> entry : builders.entrySet()) {
 			BufferBuilder.RenderedBuffer rendered = entry.getValue().endOrDiscardIfEmpty();
@@ -316,17 +318,78 @@ public class StructureRenderer implements AutoCloseable {
 		vbosBuilt = true;
 	}
 
+	private void buildTranslucentBlockVBO(BlockRenderDispatcher dispatcher) {
+		if (translucentBlockVBO != null) {
+			translucentBlockVBO.close();
+			translucentBlockVBO = null;
+		}
+
+		PoseStack poseStack = new PoseStack();
+		RandomSource random = RandomSource.create();
+		ModelBlockRenderer modelRenderer = dispatcher.getModelRenderer();
+		BufferBuilder builder = new BufferBuilder(256 * 1024);
+		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
+
+		forEachModelBlock((pos, state) -> {
+			ModelData modelData = getModelData(pos, state, dispatcher);
+			BakedModel model = new ExporterCulledBakedModel(dispatcher.getBlockModel(state), virtualLevel, pos, state);
+			random.setSeed(state.getSeed(pos));
+			if (!model.getRenderTypes(state, random, modelData).contains(RenderType.translucent())) {
+				return;
+			}
+
+			poseStack.pushPose();
+			poseStack.translate(pos.getX(), pos.getY(), pos.getZ());
+			modelRenderer.tesselateBlock(
+					virtualLevel, model, state, pos, poseStack, builder,
+					true, random, state.getSeed(pos),
+					OverlayTexture.NO_OVERLAY, modelData, RenderType.translucent()
+			);
+			poseStack.popPose();
+		});
+
+		builder.setQuadSorting(createTranslucentSorting());
+		BufferBuilder.RenderedBuffer rendered = builder.endOrDiscardIfEmpty();
+		if (rendered != null) {
+			translucentBlockVBO = new VertexBuffer(VertexBuffer.Usage.STATIC);
+			translucentBlockVBO.bind();
+			translucentBlockVBO.upload(rendered);
+			VertexBuffer.unbind();
+		}
+	}
+
+	private VertexSorting createTranslucentSorting() {
+		Matrix4f modelView = new Matrix4f(RenderSystem.getModelViewMatrix());
+		return VertexSorting.byDistance(center -> {
+			Vector3f transformed = new Vector3f(center);
+			modelView.transformPosition(transformed);
+			return -transformed.z();
+		});
+	}
+
+	private void forEachSceneBlock(BiConsumer<BlockPos, BlockState> consumer) {
+		for (Map.Entry<BlockPos, BlockState> entry : scene.getBlocks().entrySet()) {
+			consumer.accept(entry.getKey(), entry.getValue());
+		}
+	}
+
+	private void forEachModelBlock(BiConsumer<BlockPos, BlockState> consumer) {
+		forEachSceneBlock((pos, state) -> {
+			if (state.getRenderShape() == RenderShape.MODEL) {
+				consumer.accept(pos, state);
+			}
+		});
+	}
+
 	private void buildFluidVBO(BlockRenderDispatcher dispatcher) {
 		BufferBuilder builder = new BufferBuilder(256 * 1024);
 		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
 
-		for (Map.Entry<BlockPos, BlockState> entry : scene.getBlocks().entrySet()) {
-			BlockPos pos = entry.getKey();
-			BlockState state = entry.getValue();
+		forEachSceneBlock((pos, state) -> {
 			FluidState fluidState = state.getFluidState();
 
 			if (fluidState.isEmpty()) {
-				continue;
+				return;
 			}
 
 			int chunkBaseX = pos.getX() & ~15;
@@ -338,7 +401,7 @@ public class StructureRenderer implements AutoCloseable {
 					: new OffsetVertexConsumer(builder, chunkBaseX, chunkBaseY, chunkBaseZ);
 
 			dispatcher.renderLiquid(pos, virtualLevel, buffer, state, fluidState);
-		}
+		});
 
 		BufferBuilder.RenderedBuffer rendered = builder.endOrDiscardIfEmpty();
 		if (rendered != null) {
@@ -366,15 +429,22 @@ public class StructureRenderer implements AutoCloseable {
 		}
 	}
 
+	private void drawTranslucentBlockVBO() {
+		drawVertexBuffer(translucentBlockVBO, RenderType.translucent());
+	}
+
 	private void drawFluidVBO() {
-		if (fluidVBO == null) {
+		drawVertexBuffer(fluidVBO, RenderType.translucent());
+	}
+
+	private void drawVertexBuffer(@Nullable VertexBuffer vbo, RenderType renderType) {
+		if (vbo == null) {
 			return;
 		}
 
-		RenderType renderType = RenderType.translucent();
 		renderType.setupRenderState();
-		fluidVBO.bind();
-		fluidVBO.drawWithShader(
+		vbo.bind();
+		vbo.drawWithShader(
 				RenderSystem.getModelViewMatrix(),
 				RenderSystem.getProjectionMatrix(),
 				RenderSystem.getShader()
@@ -390,6 +460,11 @@ public class StructureRenderer implements AutoCloseable {
 			vbo.close();
 		}
 		blockVBOs.clear();
+
+		if (translucentBlockVBO != null) {
+			translucentBlockVBO.close();
+			translucentBlockVBO = null;
+		}
 
 		if (fluidVBO != null) {
 			fluidVBO.close();
