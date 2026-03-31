@@ -1,5 +1,6 @@
 package dev.celestiacraft.libs.compat.curios;
 
+import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,58 +26,68 @@ public class CuriosContext {
 	/**
 	 * 玩家
 	 */
-	public final Player player;
+	@Getter
+	private final Player player;
 
 	/**
 	 * 当前世界
 	 */
-	public final Level level;
+	@Getter
+	private final Level level;
 
 	/**
 	 * 当前 ItemStack
 	 */
-	public final ItemStack stack;
+	@Getter
+	private final ItemStack stack;
 
 	/**
 	 * 实体
 	 */
 	@Nullable
-	public Entity entity;
+	@Getter
+	private Entity entity;
 
 	/**
 	 * 存活实体
 	 */
 	@Nullable
-	public LivingEntity livingEntity;
+	@Getter
+	private LivingEntity livingEntity;
 
 	/**
 	 * 玩家使用的手
 	 */
 	@Nullable
-	public InteractionHand hand;
+	@Getter
+	private InteractionHand hand;
 
 	/**
 	 * 伤害来源
 	 */
 	@Nullable
-	public DamageSource damageSource;
+	@Getter
+	private DamageSource damageSource;
 
 	/**
 	 * 伤害数值
 	 */
-	public float damage;
+	@Getter
+	private float damage;
 
 	/**
 	 * 方块位置
 	 */
 	@Nullable
-	public BlockPos pos;
+	@Getter
+	private BlockPos pos;
 
 	/**
 	 * 方块状态
 	 */
 	@Nullable
-	public BlockState state;
+	@Getter
+	private BlockState state;
 
 	public CuriosContext(Player player, Level level, ItemStack stack) {
 		this.player = player;
