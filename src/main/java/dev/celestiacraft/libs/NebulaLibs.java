@@ -5,11 +5,16 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import dev.celestiacraft.libs.client.tooltip.InlineItemClientTooltipComponent;
+import dev.celestiacraft.libs.client.tooltip.InlineItemTooltipComponent;
 import dev.celestiacraft.libs.common.material.Material;
 import dev.celestiacraft.libs.common.material.MaterialRegister;
 import dev.celestiacraft.libs.common.register.NebulaItem;
+import dev.celestiacraft.libs.compat.ICheckModLoaded;
 import dev.celestiacraft.libs.compat.ftbquests.client.FTBQuestsClientCompat;
+import dev.celestiacraft.libs.config.CommonConfig;
 import dev.celestiacraft.libs.debug.DebugUserManager;
+import dev.celestiacraft.libs.register.NebulaRegistrate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -23,10 +28,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import dev.celestiacraft.libs.client.tooltip.InlineItemClientTooltipComponent;
-import dev.celestiacraft.libs.client.tooltip.InlineItemTooltipComponent;
-import dev.celestiacraft.libs.compat.ICheckModLoaded;
-import dev.celestiacraft.libs.config.CommonConfig;
 
 @Mod(NebulaLibs.MODID)
 @Mod.EventBusSubscriber(modid = NebulaLibs.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -37,9 +38,12 @@ public class NebulaLibs {
 	public final CreateRegistrate registrate;
 	public static NebulaLibs INSTANCE;
 
+	public static final NebulaRegistrate reg = NebulaRegistrate.create(MODID);
+
 	public static final Material MATERIAL = new Material(MODID);
 
 	public NebulaLibs(FMLJavaModLoadingContext context) {
+
 		IEventBus bus = context.getModEventBus();
 		INSTANCE = this;
 

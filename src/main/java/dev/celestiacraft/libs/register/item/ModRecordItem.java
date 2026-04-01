@@ -1,4 +1,4 @@
-package dev.celestiacraft.libs.register;
+package dev.celestiacraft.libs.register.item;
 
 import dev.celestiacraft.libs.sounds.RecordSpec;
 import net.minecraft.world.item.RecordItem;
