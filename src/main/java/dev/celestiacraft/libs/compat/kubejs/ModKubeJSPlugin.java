@@ -7,13 +7,17 @@ import com.google.gson.internal.GsonBuildConfig;
 import com.simibubi.create.AllParticleTypes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.TooltipHelper;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
+import dev.celestiacraft.libs.NebulaLibs;
 import dev.celestiacraft.libs.client.NebulaLang;
 import dev.celestiacraft.libs.common.material.Material;
+import dev.celestiacraft.libs.compat.ICheckModLoaded;
+import dev.celestiacraft.libs.compat.curios.ICuriosHelper;
 import dev.celestiacraft.libs.compat.jade.CommonJadeTipProvider;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.*;
 import dev.celestiacraft.libs.compat.tconstruct.util.SimpleTConUtils;
 import dev.celestiacraft.libs.debug.DebugUserManager;
+import dev.celestiacraft.libs.tags.TagsBuilder;
 import dev.celestiacraft.libs.wrapper.IntWrapper;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
@@ -34,10 +38,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
-import dev.celestiacraft.libs.NebulaLibs;
-import dev.celestiacraft.libs.compat.ICheckModLoaded;
-import dev.celestiacraft.libs.compat.curios.ICuriosHelper;
-import dev.celestiacraft.libs.tags.TagsBuilder;
 import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -84,7 +84,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 			event.add("AllSoundEvents", AllSoundEvents.class);
 			event.add("AllParticleTypes", AllParticleTypes.class);
 			event.add("TooltipHelper", TooltipHelper.class);
-			event.add("CreateLang", Lang.class);
+			event.add("CreateLang", CreateLang.class);
 		}
 
 		if (ICheckModLoaded.hasJade()) {

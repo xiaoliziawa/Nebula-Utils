@@ -1,7 +1,7 @@
 package dev.celestiacraft.libs.client.assets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.simibubi.create.foundation.gui.element.ScreenElement;
+import net.createmod.catnip.gui.element.ScreenElement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

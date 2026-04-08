@@ -1,14 +1,13 @@
 package dev.celestiacraft.libs.client;
 
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import dev.celestiacraft.libs.NebulaLibs;
+import net.createmod.catnip.lang.LangBuilder;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import dev.celestiacraft.libs.NebulaLibs;
 
 /**
- * NebulaLibs 模组的语言工具类, 基于 Create 的 {@link Lang} 和 {@link LangBuilder} 。
+ * NebulaLibs 模组的语言工具类, 基于 Create 的 {@link CreateLang} 和 {@link LangBuilder} 。
  * <p>
  * 提供便捷的方法来创建本地化文本组件, 自动添加 {@code nebula.} 命名空间前缀。
  * 支持动态参数替换({@code %s}、{@code %d} 等格式化占位符)。
@@ -39,7 +38,7 @@ import dev.celestiacraft.libs.NebulaLibs;
  * }
  * }</pre>
  *
- * @see Lang Create 的语言工具类
+ * @see CreateLang Create 的语言工具类
  * @see LangBuilder 链式文本构建器
  */
 public class NebulaLang {
@@ -59,16 +58,16 @@ public class NebulaLang {
 	 * @see #translateDirect(String, Object...) 直接获取 Component 而非 Builder
 	 */
 	public static LangBuilder translate(String langKey, Object... args) {
-		return builder().add(Components.translatable(
+		return builder().add(Component.translatable(
 				String.format("%s.%s", NebulaLibs.MODID, langKey),
-				Lang.resolveBuilders(args)
+				LangBuilder.resolveBuilders(args)
 		));
 	}
 
 	public static MutableComponent translateDirect(String langKey, Object... args) {
-		return Components.translatable(
+		return Component.translatable(
 				String.format("%s.%s", NebulaLibs.MODID, langKey),
-				Lang.resolveBuilders(args)
+				LangBuilder.resolveBuilders(args)
 		);
 	}
 
