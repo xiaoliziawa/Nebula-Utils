@@ -3,7 +3,6 @@ package dev.celestiacraft.libs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
-import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import dev.celestiacraft.libs.client.tooltip.InlineItemClientTooltipComponent;
 import dev.celestiacraft.libs.client.tooltip.InlineItemTooltipComponent;
@@ -14,6 +13,7 @@ import dev.celestiacraft.libs.compat.ICheckModLoaded;
 import dev.celestiacraft.libs.compat.ftbquests.client.FTBQuestsClientCompat;
 import dev.celestiacraft.libs.config.CommonConfig;
 import dev.celestiacraft.libs.debug.DebugUserManager;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class NebulaLibs {
 
 		this.registrate = CreateRegistrate.create(MODID)
 				.setTooltipModifierFactory((item) -> {
-					return new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
+					return new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
 							.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 				});
 

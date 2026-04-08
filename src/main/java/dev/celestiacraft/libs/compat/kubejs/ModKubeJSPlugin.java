@@ -30,6 +30,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
@@ -71,6 +72,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("FluidClass", Fluid.class);
 		event.add("Item$Properties", Item.Properties.class);
 		event.add("BlockBehaviour$Properties", BlockBehaviour.Properties.class);
+		event.add("BlockItem", BlockItem.class);
 		event.add("IntWrapper", IntWrapper.class);
 		event.add("GsonObject", JsonObject.class);
 		event.add("Gson", Gson.class);

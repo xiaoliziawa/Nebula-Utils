@@ -1,9 +1,9 @@
 package dev.celestiacraft.libs.client.exporter;
 
-import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import dev.celestiacraft.libs.compat.ICheckModLoaded;
 import dev.celestiacraft.libs.compat.mekanism.MekanismTransmitterHelper;
 import lombok.Getter;
+import net.createmod.catnip.levelWrappers.WrappedLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,23 +11,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class VirtualBlockLevel extends WrappedWorld {
+public class VirtualBlockLevel extends WrappedLevel {
 	private final Map<BlockPos, BlockState> blocks;
 	private final Map<BlockPos, CompoundTag> blockEntityNbt;
 	private final Map<BlockPos, BlockEntity> blockEntities = new HashMap<>();
