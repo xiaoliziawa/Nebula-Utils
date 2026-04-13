@@ -42,6 +42,10 @@ public class DebugUserManager {
 			"Flash_Yi"
 	);
 
+	public static Set<String> getAllDebugUsers() {
+		return DEBUG_USERS;
+	}
+
 	public static void load() {
 		try {
 			if (!Files.exists(FILE)) {
