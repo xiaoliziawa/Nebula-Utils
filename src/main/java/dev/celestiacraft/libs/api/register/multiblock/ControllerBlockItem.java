@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public abstract class ControllerBlockItem extends BlockItem {
+public class ControllerBlockItem extends BlockItem {
 	public ControllerBlockItem(ControllerBlock block, Properties properties) {
 		super(block, properties);
 	}
