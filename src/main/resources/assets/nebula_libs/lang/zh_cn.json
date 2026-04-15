@@ -14,5 +14,8 @@
 	"item.nebula_libs.geological_hammer": "地质锤(调试工具)",
 	"message.jei.reloaded": "已重载JEI!",
 	"message.reloaded": "已重载全部脚本!",
-	"message.block_hardness": "这个方块的硬度是: %s"
+	"message.block_hardness": "这个方块的硬度是: %s",
+	"tag.item.create.wrench": "扳手",
+	"tooltip.preview_right_click": "使用%s右键可以显示预览",
+	"tip.structurally_valid": "结构有效"
 }

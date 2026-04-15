@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +37,11 @@ public class UseContext {
 		return level.isClientSide();
 	}
 
-	public ItemStack getItem() {
+	public Item getItem() {
+		return getStack().getItem();
+	}
+
+	public ItemStack getStack() {
 		return player.getItemInHand(hand);
 	}
 }

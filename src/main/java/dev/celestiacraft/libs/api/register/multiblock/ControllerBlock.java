@@ -8,8 +8,11 @@ import dev.celestiacraft.libs.common.register.NebulaItem;
 import dev.celestiacraft.libs.compat.patchouli.multiblock.IMultiblockProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -84,14 +87,14 @@ public abstract class ControllerBlock<T extends BlockEntity & IMultiblockProvide
 
 		// 服务端: 调试结构
 		if (!context.isClient()) {
-			if (context.getItem().is(NebulaItem.GEOLOGICAL_HAMMER.get())
+			if (context.getStack().is(NebulaItem.GEOLOGICAL_HAMMER.get())
 					&& context.getHand() == InteractionHand.MAIN_HAND) {
 
 				T be = getBlockEntity(context.getLevel(), context.getPos());
 
 				if (be != null && be.isStructureValid()) {
 					context.getPlayer().displayClientMessage(
-							Component.literal("结构有效"),
+							Component.translatable("tip.structurally_valid"),
 							true
 					);
 					return InteractionResult.SUCCESS;
@@ -102,19 +105,19 @@ public abstract class ControllerBlock<T extends BlockEntity & IMultiblockProvide
 		return InteractionResult.PASS;
 	}
 
-	/**
-	 * 是否为触发器
-	 *
-	 * <p>
-	 * 默认使用 Create 的扳手标签
-	 * </p>
-	 *
-	 * <p>
-	 * 子类可重写以支持自定义工具
-	 * </p>
-	 */
+	protected TagKey<Item> getTriggerTag() {
+		return AllTags.AllItemTags.WRENCH.tag;
+	}
+
 	protected boolean isTrigger(UseContext context) {
-		return context.getItem().is(AllTags.AllItemTags.WRENCH.tag);
+		return context.getStack().is(getTriggerTag());
+	}
+
+	public Component getTriggerName() {
+		TagKey<Item> tag = getTriggerTag();
+		ResourceLocation id = tag.location();
+		String key = String.format("tag.item.%s.%s", id.getNamespace(), id.getPath());
+		return Component.translatable(key);
 	}
 
 	/**
