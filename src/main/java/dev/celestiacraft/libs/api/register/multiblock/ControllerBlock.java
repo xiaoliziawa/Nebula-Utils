@@ -113,10 +113,12 @@ public abstract class ControllerBlock<T extends BlockEntity & IMultiblockProvide
 		return context.getStack().is(getTriggerTag());
 	}
 
-	public Component getTriggerName() {
+	protected Component getTriggerName() {
 		TagKey<Item> tag = getTriggerTag();
 		ResourceLocation id = tag.location();
-		String key = String.format("tag.item.%s.%s", id.getNamespace(), id.getPath());
+		String path = id.getPath().replace('/', '.');
+		String key = "tag.item.%s.%s".formatted(id.getNamespace(), path);
+
 		return Component.translatable(key);
 	}
 

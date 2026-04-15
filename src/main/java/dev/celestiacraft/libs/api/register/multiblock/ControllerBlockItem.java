@@ -18,9 +18,10 @@ public class ControllerBlockItem extends BlockItem {
 
 	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-		if (this.getBlock() instanceof ControllerBlock controller) {
-			tooltip.add(Component.translatable("tooltip.preview_right_click", controller.getTriggerName())
-					.withStyle(ChatFormatting.AQUA));
+		if (!(this.getBlock() instanceof ControllerBlock controller)) {
+			return;
 		}
+		tooltip.add(Component.translatable("tooltip.preview_right_click", controller.getTriggerName())
+				.withStyle(ChatFormatting.AQUA));
 	}
 }
