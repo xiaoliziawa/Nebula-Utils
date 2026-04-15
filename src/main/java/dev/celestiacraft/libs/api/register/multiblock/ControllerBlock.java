@@ -105,14 +105,30 @@ public abstract class ControllerBlock<T extends BlockEntity & IMultiblockProvide
 		return InteractionResult.PASS;
 	}
 
+	/**
+	 * 获取触发器
+	 *
+	 * @return
+	 */
 	protected TagKey<Item> getTriggerTag() {
 		return AllTags.AllItemTags.WRENCH.tag;
 	}
 
+	/**
+	 * 是否为触发器
+	 *
+	 * @param context
+	 * @return
+	 */
 	protected boolean isTrigger(UseContext context) {
 		return context.getStack().is(getTriggerTag());
 	}
 
+	/**
+	 * 获取触发器名称
+	 *
+	 * @return
+	 */
 	protected Component getTriggerName() {
 		TagKey<Item> tag = getTriggerTag();
 		ResourceLocation id = tag.location();
