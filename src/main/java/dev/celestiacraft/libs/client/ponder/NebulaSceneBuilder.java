@@ -1,8 +1,10 @@
 package dev.celestiacraft.libs.client.ponder;
 
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
+import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.EntityElement;
+import net.createmod.ponder.api.element.TextElementBuilder;
 import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
@@ -10,7 +12,9 @@ import net.createmod.ponder.api.scene.Selection;
 import net.createmod.ponder.foundation.PonderScene;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class NebulaSceneBuilder extends CreateSceneBuilder {
@@ -45,6 +49,29 @@ public class NebulaSceneBuilder extends CreateSceneBuilder {
 			PonderLevel sceneWorld = scene.getWorld();
 			sceneWorld.getBounds().encapsulate(size);
 		});
+	}
+
+	public TextElementBuilder text(int duration, String text) {
+		return overlay().showText(duration)
+				.text(text);
+	}
+
+	public TextElementBuilder text(int duration, String text, Vec3 position) {
+		return overlay().showText(duration)
+				.text(text)
+				.pointAt(position);
+	}
+
+	public TextElementBuilder sharedText(int duration, ResourceLocation location) {
+		return overlay().showText(duration)
+				.sharedText(location);
+	}
+
+	public TextElementBuilder sharedText(int duration, ResourceLocation location, Vec3 position) {
+		return overlay().showText(duration)
+				.sharedText(location)
+				.pointAt(position)
+				.colored(PonderPalette.BLUE);
 	}
 
 	public static void init5x5(SceneBuilder builder, SceneBuildingUtil util) {
