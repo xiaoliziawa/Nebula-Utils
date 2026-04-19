@@ -108,16 +108,16 @@ public abstract class IOBlockEntity extends BlockEntity {
 	 * 命中其中任一类型即视为允许接入
 	 * </p>
 	 *
-	 * @param controller 待校验的主控 BE, 允许为 {@code null}
+	 * @param entity 待校验的主控 BE, 允许为 {@code null}
 	 * @return 命中白名单任一类型返回 {@code true}, 否则返回 {@code false}
 	 */
-	public boolean isControllerAllowed(@Nullable MachineControllerBlockEntity controller) {
-		if (controller == null) {
+	public boolean isControllerAllowed(@Nullable MachineControllerBlockEntity entity) {
+		if (entity == null) {
 			return false;
 		}
 
 		for (Class<? extends MachineControllerBlockEntity> type : supportedControllers()) {
-			if (type.isInstance(controller)) {
+			if (type.isInstance(entity)) {
 				return true;
 			}
 		}
@@ -132,10 +132,10 @@ public abstract class IOBlockEntity extends BlockEntity {
 	 * {@link #isControllerAllowed(MachineControllerBlockEntity)}
 	 * </p>
 	 *
-	 * @param be 待校验的 BE, 允许为 {@code null} 或非主控类型
+	 * @param entity 待校验的 BE, 允许为 {@code null} 或非主控类型
 	 * @return 为允许的主控返回 {@code true}, 否则返回 {@code false}
 	 */
-	public boolean isControllerAllowed(@Nullable BlockEntity be) {
-		return be instanceof MachineControllerBlockEntity controller && isControllerAllowed(controller);
+	public boolean isControllerAllowed(@Nullable BlockEntity entity) {
+		return entity instanceof MachineControllerBlockEntity controller && isControllerAllowed(controller);
 	}
 }
