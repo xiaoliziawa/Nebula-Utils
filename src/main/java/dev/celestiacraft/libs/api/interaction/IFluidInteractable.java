@@ -57,6 +57,7 @@ import org.jetbrains.annotations.NotNull;
  * <ul>
  *     <li>{@link #useFluidInteraction()}: 是否始终允许交互</li>
  *     <li>{@link #creativeUseFluidInteraction()}: 是否仅创造模式允许</li>
+ *     <li>{@link #canFluidInteract(Player, InteractionHand, Level, BlockPos, BlockHitResult)}: 流体交互的最终条件判断(带上下文)</li>
  *     <li>{@link #canUseFluidInteraction(Player)}: 最终权限判断</li>
  * </ul>
  */
@@ -169,7 +170,7 @@ public interface IFluidInteractable {
 			return InteractionResult.PASS;
 		}
 
-		if (canUseFluidInteraction(player) && FluidUtil.interactWithFluidHandler(
+		if (canFluidInteract(player, hand, level, pos, result) && FluidUtil.interactWithFluidHandler(
 				player,
 				hand,
 				level,
@@ -180,5 +181,52 @@ public interface IFluidInteractable {
 		}
 
 		return InteractionResult.PASS;
+	}
+
+	/**
+	 * 判断是否允许执行流体交互(带上下文)
+	 *
+	 * <p>
+	 * 该方法是流体交互的<strong>最终判定入口</strong>, 在
+	 * {@link #tryFluidInteraction(Player, InteractionHand, Level, BlockPos, BlockHitResult)}
+	 * 中被调用, 用于决定是否继续执行
+	 * {@link FluidUtil#interactWithFluidHandler(Player, InteractionHand, Level, BlockPos, Direction)}
+	 * </p>
+	 *
+	 * <p>
+	 * 与 {@link #canUseFluidInteraction(Player)} 不同, 此方法提供了完整的上下文信息,
+	 * 实现类可以基于以下条件进行更精细的控制：
+	 * </p>
+	 * <ul>
+	 *     <li>玩家状态(如是否潜行, 是否持有特定物品)</li>
+	 *     <li>点击面({@link BlockHitResult#getDirection()})</li>
+	 *     <li>方块状态或方块实体内部数据</li>
+	 *     <li>世界环境(如维度, 时间, 天气)</li>
+	 * </ul>
+	 *
+	 * <p>
+	 * 默认实现仅调用 {@link #canUseFluidInteraction(Player)},
+	 * 即沿用基础权限判断逻辑(全局允许 / 创造模式允许)
+	 * </p>
+	 *
+	 * <p>
+	 * <strong>建议: </strong>若需要限制流体类型, 交互方向或机器状态, 应重写此方法
+	 * </p>
+	 *
+	 * @param player 玩家
+	 * @param hand   使用的手
+	 * @param level  世界
+	 * @param pos    方块位置
+	 * @param result 命中结果
+	 * @return 是否允许执行流体交互
+	 */
+	default boolean canFluidInteract(
+			Player player,
+			InteractionHand hand,
+			Level level,
+			BlockPos pos,
+			BlockHitResult result
+	) {
+		return canUseFluidInteraction(player);
 	}
 }
