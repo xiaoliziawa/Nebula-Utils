@@ -2,7 +2,6 @@ package dev.celestiacraft.libs.api.register.block;
 
 import dev.celestiacraft.libs.api.interaction.IFluidInteractable;
 import dev.celestiacraft.libs.api.interaction.context.UseContext;
-import dev.celestiacraft.libs.api.register.multiblock.ControllerBlockFacing;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -122,15 +121,15 @@ public class BasicBlock extends Block implements IFluidInteractable {
 	 *
 	 * <pre>{@code
 	 * @Override
-	 * protected ControllerBlockFacing useFacingType() {
-	 *     return ControllerBlockFacing.HORIZONTAL;
+	 * protected BasicBlockFacing useFacingType() {
+	 *     return BasicBlockFacing.HORIZONTAL;
 	 * }
 	 * }</pre>
 	 *
 	 * @return 使用的方向类型, 默认 {@code NONE}
 	 */
-	protected ControllerBlockFacing useFacingType() {
-		return ControllerBlockFacing.NONE;
+	protected BasicBlockFacing useFacingType() {
+		return BasicBlockFacing.NONE;
 	}
 
 	/**
@@ -246,7 +245,7 @@ public class BasicBlock extends Block implements IFluidInteractable {
 		Direction facing = context.getHorizontalDirection().getOpposite();
 
 		// 如果是六面方向支持上下
-		if (useFacingType() == ControllerBlockFacing.FACING) {
+		if (useFacingType() == BasicBlockFacing.FACING) {
 			if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
 				facing = context.getNearestLookingDirection().getOpposite();
 			}
