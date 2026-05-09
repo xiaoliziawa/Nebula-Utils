@@ -27,6 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod(NebulaLibs.MODID)
 @Mod.EventBusSubscriber(modid = NebulaLibs.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -63,12 +64,16 @@ public class NebulaLibs {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
 
-	public static void modifyWindowsTitle(String title) {
-		Minecraft.getInstance().getWindow().setTitle(title);
-	}
-
 	public static ResourceLocation loadForgeResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath("forge", path);
+	}
+
+	public static ResourceLocation loadCuriosResource(String path) {
+		return ResourceLocation.fromNamespaceAndPath(CuriosApi.MODID, path);
+	}
+
+	public static void modifyWindowsTitle(String title) {
+		Minecraft.getInstance().getWindow().setTitle(title);
 	}
 
 	/**

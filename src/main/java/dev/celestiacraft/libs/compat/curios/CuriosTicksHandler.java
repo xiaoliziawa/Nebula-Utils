@@ -36,7 +36,7 @@ public class CuriosTicksHandler {
 				continue;
 			}
 
-			tickable.curiosTick(new CuriosContext(player, level, stack));
+			tickable.onCuriosTick(new CuriosContext(player, level, stack));
 		}
 	}
 }

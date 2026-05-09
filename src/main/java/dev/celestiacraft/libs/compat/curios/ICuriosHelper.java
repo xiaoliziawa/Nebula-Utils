@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <p>
  * 一般情况下只需要实现
- * {@link #curiosTick(CuriosContext)} 方法即可.
+ * {@link #onCuriosTick(CuriosContext)} 方法即可.
  * </p>
  *
  * <p>
@@ -43,8 +43,8 @@ import java.util.List;
  * <pre>{@code
  * public class CobaltItem extends Item implements ICuriosHelper {
  *     @Override
- *     public void curiosTick(CuriosContext context) {
- *         context.player.addEffect(new MobEffectInstance(
+ *     public void onCuriosTick(CuriosContext context) {
+ *         context.getPlayer().addEffect(new MobEffectInstance(
  *             MobEffects.MOVEMENT_SPEED,
  *             40,
  *             1,
@@ -121,12 +121,12 @@ public interface ICuriosHelper {
 	 *
 	 * <p>
 	 * 一般情况下只需要实现
-	 * {@link #curiosTick(CuriosContext)} 即可
+	 * {@link #onCuriosTick(CuriosContext)} 即可
 	 * </p>
 	 *
 	 * <p>
 	 * 如果需要访问当前饰品的 {@link ItemStack},
-	 * 可以实现 {@link #curiosTick(CuriosContext)}
+	 * 可以实现 {@link #onCuriosTick(CuriosContext)}
 	 * </p>
 	 *
 	 * <p>
@@ -150,7 +150,7 @@ public interface ICuriosHelper {
 	 * }
 	 * }</pre>
 	 */
-	void curiosTick(CuriosContext context);
+	void onCuriosTick(CuriosContext context);
 
 	/**
 	 * 获取 Curios Tick 间隔
