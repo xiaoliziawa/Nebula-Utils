@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.ToIntFunction;
+
 public class BasicBlock extends Block implements IFluidInteractable {
 	public BasicBlock(Properties properties) {
 		super(properties);
@@ -298,6 +300,12 @@ public class BasicBlock extends Block implements IFluidInteractable {
 	 */
 	protected boolean useLitState() {
 		return false;
+	}
+
+	public static ToIntFunction<BlockState> litBlockEmission(int level) {
+		return (state) -> {
+			return state.getValue(BlockStateProperties.LIT) ? level : 0;
+		};
 	}
 
 	public static int getYRotFromFacing(Direction direction) {
