@@ -4,6 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,7 @@ import java.util.List;
  *
  * @see CuriosContext
  */
-public interface ICuriosHelper {
+public interface ICuriosHelper extends ICuriosItemHandler, ICurioItem {
 	/**
 	 * 检查指定实体的 Curios 槽位中是否存在某个指定的物品,
 	 *
