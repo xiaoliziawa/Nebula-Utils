@@ -140,7 +140,7 @@ public interface ICuriosHelper extends ICuriosItemHandler, ICurioItem {
 	 * <pre>{@code
 	 * public class CobaltItem extends Item implements ICuriosHelper {
 	 *     @Override
-	 *     public void curiosTick(CuriosContext context) {
+	 *     public void onCuriosTick(CuriosContext context) {
 	 *         context.player.addEffect(new MobEffectInstance(
 	 *             MobEffects.MOVEMENT_SPEED,
 	 *             40,
