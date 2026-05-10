@@ -10,18 +10,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
+@Getter
 public class UseContext {
-	@Getter
 	private final Level level;
-	@Getter
 	private final BlockPos pos;
-	@Getter
 	private final Player player;
-	@Getter
 	private final InteractionHand hand;
-	@Getter
 	private final BlockState state;
-	@Getter
 	private final BlockHitResult result;
 
 	public UseContext(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
