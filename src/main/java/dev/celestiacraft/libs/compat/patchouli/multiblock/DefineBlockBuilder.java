@@ -146,6 +146,13 @@ public class DefineBlockBuilder {
 
 	/**
 	 * 指定方块 + 状态映射 (Map<Property, Comparable>)
+	 * <pre>{@code
+	 * 	.define('E', (builder) -> {
+	 * 	    builder.map(Blocks.OAK_SLAB, PropertyImmutableMap.create()
+	 * 		    .add(SlabBlock.TYPE, SlabType.TOP)
+	 * 			.build());
+	 *  })
+	 * }</pre>
 	 */
 	@Info("Specifies a block + state mapping (Map<Property, Comparable>)\n\n指定方块 + 状态映射 (Map<Property, Comparable>)")
 	public void map(Block block, Map<Property<?>, ? extends Comparable<?>> map) {
