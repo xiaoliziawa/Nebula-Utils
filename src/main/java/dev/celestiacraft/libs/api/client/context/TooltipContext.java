@@ -3,11 +3,15 @@ package dev.celestiacraft.libs.api.client.context;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
@@ -35,6 +39,36 @@ public class TooltipContext {
 			return player;
 		}
 		return Minecraft.getInstance().player;
+	}
+
+	public BlockPos getLookingBlockPos() {
+		Minecraft minecraft = Minecraft.getInstance();
+
+		if (minecraft.hitResult instanceof BlockHitResult result) {
+			return result.getBlockPos();
+		}
+
+		return BlockPos.ZERO;
+	}
+
+	public BlockState getLookingBlockState() {
+		BlockPos pos = getLookingBlockPos();
+
+		if (level == null) {
+			return null;
+		}
+
+		return level.getBlockState(pos);
+	}
+
+	public Vec3 getPlayerPos() {
+		Player player = getPlayer();
+		return player != null ? player.position() : Vec3.ZERO;
+	}
+
+	public BlockPos getPlayerBlockPos() {
+		Player player = getPlayer();
+		return player != null ? player.blockPosition() : BlockPos.ZERO;
 	}
 
 	public void addEmpty() {
@@ -81,17 +115,17 @@ public class TooltipContext {
 		}
 	}
 
-	public void addCtrlTooltip(String normalKey, String shiftKey) {
+	public void addCtrlTooltip(String normalKey, String ctrlKey) {
 		if (isCtrlDown()) {
-			addTranslatable(shiftKey);
+			addTranslatable(ctrlKey);
 		} else {
 			addTranslatable(normalKey);
 		}
 	}
 
-	public void addAltTooltip(String normalKey, String shiftKey) {
+	public void addAltTooltip(String normalKey, String altKey) {
 		if (isAltDown()) {
-			addTranslatable(shiftKey);
+			addTranslatable(altKey);
 		} else {
 			addTranslatable(normalKey);
 		}
