@@ -123,67 +123,67 @@ public class FestivalUtils {
 
 	public static String getFestivalGreeting() {
 		if (isChineseNewYear()) {
-			return "Happy Spring Festival!";
+			return "Wishing You Happiness, Prosperity, and Good Fortune in the New Year!";
 		}
 
 		if (isChineseNewYearsEve()) {
-			return "Happy Chinese New Year's Eve!";
+			return "May Your Family Be Filled with Warmth, Joy, and Reunion Tonight!";
 		}
 
 		if (isLanternFestival()) {
-			return "Happy Lantern Festival!";
+			return "May the Lanterns Light Up Your Happiness and Wishes!";
 		}
 
 		if (isDragonBoatFestival()) {
-			return "Happy Dragon Boat Festival!";
+			return "Wishing You Peace, Health, and Good Luck During the Dragon Boat Festival!";
 		}
 
 		if (isMidAutumnFestival()) {
-			return "Happy Mid-Autumn Festival!";
+			return "May the Full Moon Bring You Reunion, Happiness, and Peace!";
 		}
 
 		if (isLabaFestival()) {
-			return "Happy Laba Festival!";
+			return "Wishing You Warmth, Happiness, and Good Fortune This Laba Festival!";
 		}
 
 		if (isDoubleNinthFestival()) {
-			return "Happy Double Ninth Festival!";
+			return "Wishing You Health, Longevity, and Peace on the Double Ninth Festival!";
 		}
 
 		if (isNewYear()) {
-			return "Happy New Year!";
+			return "Wishing You a Wonderful New Year Filled with Joy and Success!";
 		}
 
 		if (isWomensDay()) {
-			return "Happy Women's Day!";
+			return "Wishing Every Wonderful Woman a Happy and Inspiring Women's Day!";
 		}
 
 		if (isAprilFoolsDay()) {
-			return "Happy April Fools' Day!";
+			return "Hope Your April Fools' Day Is Filled with Laughter and Fun!";
 		}
 
 		if (isLabourDay()) {
-			return "Happy Labour Day!";
+			return "Wishing You a Relaxing and Rewarding Labour Day!";
 		}
 
 		if (isChildrensDay()) {
-			return "Happy Children's Day!";
+			return "May Every Child Grow Up Happy, Healthy, and Full of Dreams!";
 		}
 
 		if (isHalloween()) {
-			return "Happy Halloween!";
+			return "Wishing You a Spooky, Fun, and Candy-Filled Halloween Night!";
 		}
 
 		if (isChristmasEve()) {
-			return "Merry Christmas Eve!";
+			return "May Your Christmas Eve Be Filled with Warmth, Peace, and Love!";
 		}
 
 		if (isChristmas()) {
-			return "Merry Christmas!";
+			return "Merry Christmas and Best Wishes for Joy and Happiness!";
 		}
 
 		if (isNewYearsEve()) {
-			return "Happy New Year's Eve!";
+			return "May the Coming Year Bring You Happiness, Success, and New Adventures!";
 		}
 
 		return null;
