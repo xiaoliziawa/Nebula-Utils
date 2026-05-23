@@ -75,7 +75,7 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 		event.add("GsonBuilder", GsonBuilder.class);
 		event.add("GsonBuildConfig", GsonBuildConfig.class);
 		event.add("NebulaMaterial", Material.class);
-		event.add("Lazy", Lazy.class);
+		event.add("ForgeLazy", Lazy.class);
 		event.add("DebugUserManager", DebugUserManager.class);
 		event.add("FestivalUtils", FestivalUtils.class);
 
